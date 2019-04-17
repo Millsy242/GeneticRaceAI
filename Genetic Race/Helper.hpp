@@ -3,7 +3,7 @@
 //  t02
 //
 //  Created by Daniel Harvey on 17/02/2019.
-//  Copyright © 2019 Cordry, Julien. All rights reserved.
+//  
 //
 
 #ifndef Helper_hpp
