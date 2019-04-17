@@ -1,15 +1,66 @@
-//
-//  main.cpp
-//  Genetic Race
-//
-//  Created by Daniel Harvey on 18/04/2019.
-//  Copyright © 2019 Daniel Harvey. All rights reserved.
-//
+// Daniel Harvey
+// s6291311
 
+
+#include "game.h"
+#include "menu.h"
+#include "DataStruct.hpp"
 #include <iostream>
+#include <cstring>
+#include <string>
+#include <sqlite3.h>
 
-int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
+
+//https://github.com/eliasdaler/imgui-sfml
+//https://github.com/ocornut/imgui
+//https://eliasdaler.wordpress.com/2016/05/31/imgui-sfml-tutorial-part-1/
+
+
+
+int main()
+{
+    srand ((unsigned int)time(NULL));
+    Data ConstantData;
+    ConstantData.Init();
+    Menu menu(ConstantData);
+    menu.Run();
+    
+    bool restart = true;
+    
+    while(restart)
+    {
+        restart = ConstantData.Playing;
+        if(restart)
+        {
+            Game game(ConstantData);
+            restart = game.Start();
+            if(restart)
+            {
+                std::cout<<"restarting menu" <<std::endl;
+                
+                ConstantData.Init();
+                Menu newMenu(ConstantData);
+                newMenu.Run();
+                restart = ConstantData.Playing;
+            }
+            else
+            {
+                std::cout<<"restart is false after game.start()"<<std::endl;
+            }
+        }
+        else
+        {
+            std::cout<<"restart is false after menu"<<std::endl;
+        }
+    }
+    ConstantData.End();
+    
     return 0;
 }
+
+
+
+
+
+
+

@@ -8,6 +8,30 @@
 
 /* Begin PBXBuildFile section */
 		0B1431C02267E85E000FEEF7 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B1431BF2267E85E000FEEF7 /* main.cpp */; };
+		0B1431C82267E881000FEEF7 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B1431C72267E881000FEEF7 /* libsqlite3.0.tbd */; };
+		0B1431CE2267E9CD000FEEF7 /* libsfml-audio.2.5.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B1431C92267E9CD000FEEF7 /* libsfml-audio.2.5.1.dylib */; };
+		0B1431CF2267E9CD000FEEF7 /* libsfml-graphics.2.5.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B1431CA2267E9CD000FEEF7 /* libsfml-graphics.2.5.1.dylib */; };
+		0B1431D02267E9CD000FEEF7 /* libsfml-network.2.5.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B1431CB2267E9CD000FEEF7 /* libsfml-network.2.5.1.dylib */; };
+		0B1431D12267E9CD000FEEF7 /* libsfml-window.2.5.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B1431CC2267E9CD000FEEF7 /* libsfml-window.2.5.1.dylib */; };
+		0B1431D22267E9CD000FEEF7 /* libsfml-system.2.5.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B1431CD2267E9CD000FEEF7 /* libsfml-system.2.5.1.dylib */; };
+		0B1431E82267EF25000FEEF7 /* imgui_widgets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B1431DF2267EF25000FEEF7 /* imgui_widgets.cpp */; };
+		0B1431E92267EF25000FEEF7 /* imgui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B1431E12267EF25000FEEF7 /* imgui.cpp */; };
+		0B1431EA2267EF25000FEEF7 /* imgui-SFML.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B1431E22267EF25000FEEF7 /* imgui-SFML.cpp */; };
+		0B1431EB2267EF25000FEEF7 /* imgui_demo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B1431E62267EF25000FEEF7 /* imgui_demo.cpp */; };
+		0B1431EC2267EF25000FEEF7 /* imgui_draw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B1431E72267EF25000FEEF7 /* imgui_draw.cpp */; };
+		0B1432112267EF36000FEEF7 /* trackpoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B1431F32267EF35000FEEF7 /* trackpoints.cpp */; };
+		0B1432122267EF36000FEEF7 /* Car.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B1431F42267EF35000FEEF7 /* Car.cpp */; };
+		0B1432132267EF36000FEEF7 /* SightLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B1431F52267EF35000FEEF7 /* SightLine.cpp */; };
+		0B1432142267EF36000FEEF7 /* Database.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B1431F62267EF35000FEEF7 /* Database.cpp */; };
+		0B1432152267EF36000FEEF7 /* Collision.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B1431F92267EF35000FEEF7 /* Collision.cpp */; };
+		0B1432162267EF36000FEEF7 /* game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B1431FA2267EF35000FEEF7 /* game.cpp */; };
+		0B1432172267EF36000FEEF7 /* Vision.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B1431FB2267EF35000FEEF7 /* Vision.cpp */; };
+		0B1432182267EF36000FEEF7 /* overlay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B1431FF2267EF36000FEEF7 /* overlay.cpp */; };
+		0B14321B2267EF36000FEEF7 /* osdialog_mac.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B1432052267EF36000FEEF7 /* osdialog_mac.m */; };
+		0B14321C2267EF36000FEEF7 /* osdialog.c in Sources */ = {isa = PBXBuildFile; fileRef = 0B1432062267EF36000FEEF7 /* osdialog.c */; };
+		0B14321D2267EF36000FEEF7 /* menu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B14320A2267EF36000FEEF7 /* menu.cpp */; };
+		0B14321E2267EF36000FEEF7 /* PopulationManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B14320D2267EF36000FEEF7 /* PopulationManager.cpp */; };
+		0B14321F2267EF36000FEEF7 /* Chromosome.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B14320F2267EF36000FEEF7 /* Chromosome.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +49,53 @@
 /* Begin PBXFileReference section */
 		0B1431BC2267E85E000FEEF7 /* Genetic Race */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Genetic Race"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B1431BF2267E85E000FEEF7 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		0B1431C72267E881000FEEF7 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		0B1431C92267E9CD000FEEF7 /* libsfml-audio.2.5.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libsfml-audio.2.5.1.dylib"; path = "../../../../../../../../usr/local/Cellar/sfml/2.5.1/lib/libsfml-audio.2.5.1.dylib"; sourceTree = "<group>"; };
+		0B1431CA2267E9CD000FEEF7 /* libsfml-graphics.2.5.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libsfml-graphics.2.5.1.dylib"; path = "../../../../../../../../usr/local/Cellar/sfml/2.5.1/lib/libsfml-graphics.2.5.1.dylib"; sourceTree = "<group>"; };
+		0B1431CB2267E9CD000FEEF7 /* libsfml-network.2.5.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libsfml-network.2.5.1.dylib"; path = "../../../../../../../../usr/local/Cellar/sfml/2.5.1/lib/libsfml-network.2.5.1.dylib"; sourceTree = "<group>"; };
+		0B1431CC2267E9CD000FEEF7 /* libsfml-window.2.5.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libsfml-window.2.5.1.dylib"; path = "../../../../../../../../usr/local/Cellar/sfml/2.5.1/lib/libsfml-window.2.5.1.dylib"; sourceTree = "<group>"; };
+		0B1431CD2267E9CD000FEEF7 /* libsfml-system.2.5.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libsfml-system.2.5.1.dylib"; path = "../../../../../../../../usr/local/Cellar/sfml/2.5.1/lib/libsfml-system.2.5.1.dylib"; sourceTree = "<group>"; };
+		0B1431DC2267EF25000FEEF7 /* imgui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imgui.h; sourceTree = "<group>"; };
+		0B1431DD2267EF25000FEEF7 /* imstb_textedit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imstb_textedit.h; sourceTree = "<group>"; };
+		0B1431DE2267EF25000FEEF7 /* imconfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imconfig.h; sourceTree = "<group>"; };
+		0B1431DF2267EF25000FEEF7 /* imgui_widgets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = imgui_widgets.cpp; sourceTree = "<group>"; };
+		0B1431E02267EF25000FEEF7 /* imstb_truetype.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imstb_truetype.h; sourceTree = "<group>"; };
+		0B1431E12267EF25000FEEF7 /* imgui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = imgui.cpp; sourceTree = "<group>"; };
+		0B1431E22267EF25000FEEF7 /* imgui-SFML.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "imgui-SFML.cpp"; sourceTree = "<group>"; };
+		0B1431E32267EF25000FEEF7 /* imgui_internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imgui_internal.h; sourceTree = "<group>"; };
+		0B1431E42267EF25000FEEF7 /* imgui-SFML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "imgui-SFML.h"; sourceTree = "<group>"; };
+		0B1431E52267EF25000FEEF7 /* imstb_rectpack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imstb_rectpack.h; sourceTree = "<group>"; };
+		0B1431E62267EF25000FEEF7 /* imgui_demo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = imgui_demo.cpp; sourceTree = "<group>"; };
+		0B1431E72267EF25000FEEF7 /* imgui_draw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = imgui_draw.cpp; sourceTree = "<group>"; };
+		0B1431EE2267EF35000FEEF7 /* Collision.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Collision.hpp; sourceTree = "<group>"; };
+		0B1431EF2267EF35000FEEF7 /* Vision.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Vision.hpp; sourceTree = "<group>"; };
+		0B1431F02267EF35000FEEF7 /* SightLine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SightLine.hpp; sourceTree = "<group>"; };
+		0B1431F12267EF35000FEEF7 /* Database.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Database.hpp; sourceTree = "<group>"; };
+		0B1431F22267EF35000FEEF7 /* Car.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Car.h; sourceTree = "<group>"; };
+		0B1431F32267EF35000FEEF7 /* trackpoints.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = trackpoints.cpp; sourceTree = "<group>"; };
+		0B1431F42267EF35000FEEF7 /* Car.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Car.cpp; sourceTree = "<group>"; };
+		0B1431F52267EF35000FEEF7 /* SightLine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SightLine.cpp; sourceTree = "<group>"; };
+		0B1431F62267EF35000FEEF7 /* Database.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Database.cpp; sourceTree = "<group>"; };
+		0B1431F72267EF35000FEEF7 /* game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = game.h; sourceTree = "<group>"; };
+		0B1431F82267EF35000FEEF7 /* DataStruct.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DataStruct.hpp; sourceTree = "<group>"; };
+		0B1431F92267EF35000FEEF7 /* Collision.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Collision.cpp; sourceTree = "<group>"; };
+		0B1431FA2267EF35000FEEF7 /* game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = game.cpp; sourceTree = "<group>"; };
+		0B1431FB2267EF35000FEEF7 /* Vision.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vision.cpp; sourceTree = "<group>"; };
+		0B1431FC2267EF35000FEEF7 /* trackpoints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = trackpoints.h; sourceTree = "<group>"; };
+		0B1431FD2267EF35000FEEF7 /* Helper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Helper.hpp; sourceTree = "<group>"; };
+		0B1431FF2267EF36000FEEF7 /* overlay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = overlay.cpp; sourceTree = "<group>"; };
+		0B1432002267EF36000FEEF7 /* overlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = overlay.h; sourceTree = "<group>"; };
+		0B1432032267EF36000FEEF7 /* osdialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = osdialog.h; sourceTree = "<group>"; };
+		0B1432052267EF36000FEEF7 /* osdialog_mac.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = osdialog_mac.m; sourceTree = "<group>"; };
+		0B1432062267EF36000FEEF7 /* osdialog.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = osdialog.c; sourceTree = "<group>"; };
+		0B1432082267EF36000FEEF7 /* imgui_user.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imgui_user.h; sourceTree = "<group>"; };
+		0B14320A2267EF36000FEEF7 /* menu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = menu.cpp; sourceTree = "<group>"; };
+		0B14320B2267EF36000FEEF7 /* menu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = menu.h; sourceTree = "<group>"; };
+		0B14320D2267EF36000FEEF7 /* PopulationManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PopulationManager.cpp; sourceTree = "<group>"; };
+		0B14320E2267EF36000FEEF7 /* Chromosome.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Chromosome.hpp; sourceTree = "<group>"; };
+		0B14320F2267EF36000FEEF7 /* Chromosome.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Chromosome.cpp; sourceTree = "<group>"; };
+		0B1432102267EF36000FEEF7 /* PopulationManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PopulationManager.hpp; sourceTree = "<group>"; };
+		0B1432202267EF7D000FEEF7 /* SFMLVectorMaths.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SFMLVectorMaths.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +103,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B1431CE2267E9CD000FEEF7 /* libsfml-audio.2.5.1.dylib in Frameworks */,
+				0B1431CF2267E9CD000FEEF7 /* libsfml-graphics.2.5.1.dylib in Frameworks */,
+				0B1431D02267E9CD000FEEF7 /* libsfml-network.2.5.1.dylib in Frameworks */,
+				0B1431D12267E9CD000FEEF7 /* libsfml-window.2.5.1.dylib in Frameworks */,
+				0B1431D22267E9CD000FEEF7 /* libsfml-system.2.5.1.dylib in Frameworks */,
+				0B1431C82267E881000FEEF7 /* libsqlite3.0.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -43,6 +120,7 @@
 			children = (
 				0B1431BE2267E85E000FEEF7 /* Genetic Race */,
 				0B1431BD2267E85E000FEEF7 /* Products */,
+				0B1431C62267E881000FEEF7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -57,9 +135,119 @@
 		0B1431BE2267E85E000FEEF7 /* Genetic Race */ = {
 			isa = PBXGroup;
 			children = (
+				0B1431ED2267EF35000FEEF7 /* Game */,
+				0B14320C2267EF36000FEEF7 /* Genetic Algorithm */,
+				0B1431FD2267EF35000FEEF7 /* Helper.hpp */,
+				0B1432202267EF7D000FEEF7 /* SFMLVectorMaths.hpp */,
+				0B1432072267EF36000FEEF7 /* ImGui */,
+				0B1432092267EF36000FEEF7 /* Menu */,
+				0B1432012267EF36000FEEF7 /* OsDialog */,
+				0B1431FE2267EF36000FEEF7 /* UI */,
+				0B1431DB2267EF25000FEEF7 /* Dear ImGUI */,
 				0B1431BF2267E85E000FEEF7 /* main.cpp */,
 			);
 			path = "Genetic Race";
+			sourceTree = "<group>";
+		};
+		0B1431C62267E881000FEEF7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0B1431C92267E9CD000FEEF7 /* libsfml-audio.2.5.1.dylib */,
+				0B1431CA2267E9CD000FEEF7 /* libsfml-graphics.2.5.1.dylib */,
+				0B1431CB2267E9CD000FEEF7 /* libsfml-network.2.5.1.dylib */,
+				0B1431CD2267E9CD000FEEF7 /* libsfml-system.2.5.1.dylib */,
+				0B1431CC2267E9CD000FEEF7 /* libsfml-window.2.5.1.dylib */,
+				0B1431C72267E881000FEEF7 /* libsqlite3.0.tbd */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		0B1431DB2267EF25000FEEF7 /* Dear ImGUI */ = {
+			isa = PBXGroup;
+			children = (
+				0B1431DC2267EF25000FEEF7 /* imgui.h */,
+				0B1431DD2267EF25000FEEF7 /* imstb_textedit.h */,
+				0B1431DE2267EF25000FEEF7 /* imconfig.h */,
+				0B1431DF2267EF25000FEEF7 /* imgui_widgets.cpp */,
+				0B1431E02267EF25000FEEF7 /* imstb_truetype.h */,
+				0B1431E12267EF25000FEEF7 /* imgui.cpp */,
+				0B1431E22267EF25000FEEF7 /* imgui-SFML.cpp */,
+				0B1431E32267EF25000FEEF7 /* imgui_internal.h */,
+				0B1431E42267EF25000FEEF7 /* imgui-SFML.h */,
+				0B1431E52267EF25000FEEF7 /* imstb_rectpack.h */,
+				0B1431E62267EF25000FEEF7 /* imgui_demo.cpp */,
+				0B1431E72267EF25000FEEF7 /* imgui_draw.cpp */,
+			);
+			path = "Dear ImGUI";
+			sourceTree = "<group>";
+		};
+		0B1431ED2267EF35000FEEF7 /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				0B1431EE2267EF35000FEEF7 /* Collision.hpp */,
+				0B1431EF2267EF35000FEEF7 /* Vision.hpp */,
+				0B1431F02267EF35000FEEF7 /* SightLine.hpp */,
+				0B1431F12267EF35000FEEF7 /* Database.hpp */,
+				0B1431F22267EF35000FEEF7 /* Car.h */,
+				0B1431F32267EF35000FEEF7 /* trackpoints.cpp */,
+				0B1431F42267EF35000FEEF7 /* Car.cpp */,
+				0B1431F52267EF35000FEEF7 /* SightLine.cpp */,
+				0B1431F62267EF35000FEEF7 /* Database.cpp */,
+				0B1431F72267EF35000FEEF7 /* game.h */,
+				0B1431F82267EF35000FEEF7 /* DataStruct.hpp */,
+				0B1431F92267EF35000FEEF7 /* Collision.cpp */,
+				0B1431FA2267EF35000FEEF7 /* game.cpp */,
+				0B1431FB2267EF35000FEEF7 /* Vision.cpp */,
+				0B1431FC2267EF35000FEEF7 /* trackpoints.h */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
+		0B1431FE2267EF36000FEEF7 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				0B1431FF2267EF36000FEEF7 /* overlay.cpp */,
+				0B1432002267EF36000FEEF7 /* overlay.h */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		0B1432012267EF36000FEEF7 /* OsDialog */ = {
+			isa = PBXGroup;
+			children = (
+				0B1432032267EF36000FEEF7 /* osdialog.h */,
+				0B1432052267EF36000FEEF7 /* osdialog_mac.m */,
+				0B1432062267EF36000FEEF7 /* osdialog.c */,
+			);
+			path = OsDialog;
+			sourceTree = "<group>";
+		};
+		0B1432072267EF36000FEEF7 /* ImGui */ = {
+			isa = PBXGroup;
+			children = (
+				0B1432082267EF36000FEEF7 /* imgui_user.h */,
+			);
+			path = ImGui;
+			sourceTree = "<group>";
+		};
+		0B1432092267EF36000FEEF7 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				0B14320A2267EF36000FEEF7 /* menu.cpp */,
+				0B14320B2267EF36000FEEF7 /* menu.h */,
+			);
+			path = Menu;
+			sourceTree = "<group>";
+		};
+		0B14320C2267EF36000FEEF7 /* Genetic Algorithm */ = {
+			isa = PBXGroup;
+			children = (
+				0B14320D2267EF36000FEEF7 /* PopulationManager.cpp */,
+				0B14320E2267EF36000FEEF7 /* Chromosome.hpp */,
+				0B14320F2267EF36000FEEF7 /* Chromosome.cpp */,
+				0B1432102267EF36000FEEF7 /* PopulationManager.hpp */,
+			);
+			path = "Genetic Algorithm";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -118,7 +306,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B1432152267EF36000FEEF7 /* Collision.cpp in Sources */,
+				0B14321C2267EF36000FEEF7 /* osdialog.c in Sources */,
 				0B1431C02267E85E000FEEF7 /* main.cpp in Sources */,
+				0B1432172267EF36000FEEF7 /* Vision.cpp in Sources */,
+				0B1431EA2267EF25000FEEF7 /* imgui-SFML.cpp in Sources */,
+				0B14321F2267EF36000FEEF7 /* Chromosome.cpp in Sources */,
+				0B1431E82267EF25000FEEF7 /* imgui_widgets.cpp in Sources */,
+				0B1432132267EF36000FEEF7 /* SightLine.cpp in Sources */,
+				0B1431EC2267EF25000FEEF7 /* imgui_draw.cpp in Sources */,
+				0B14321E2267EF36000FEEF7 /* PopulationManager.cpp in Sources */,
+				0B14321B2267EF36000FEEF7 /* osdialog_mac.m in Sources */,
+				0B1431EB2267EF25000FEEF7 /* imgui_demo.cpp in Sources */,
+				0B1432182267EF36000FEEF7 /* overlay.cpp in Sources */,
+				0B1432112267EF36000FEEF7 /* trackpoints.cpp in Sources */,
+				0B14321D2267EF36000FEEF7 /* menu.cpp in Sources */,
+				0B1432122267EF36000FEEF7 /* Car.cpp in Sources */,
+				0B1432142267EF36000FEEF7 /* Database.cpp in Sources */,
+				0B1431E92267EF25000FEEF7 /* imgui.cpp in Sources */,
+				0B1432162267EF36000FEEF7 /* game.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -240,7 +446,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 0.8;
+				HEADER_SEARCH_PATHS = (
+					/usr/local/Cellar/sfml/2.5.1/include,
+					"$(SRCROOT)/include",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Cellar/sfml/2.5.1/lib,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
@@ -248,7 +464,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 0.8;
+				HEADER_SEARCH_PATHS = (
+					/usr/local/Cellar/sfml/2.5.1/include,
+					"$(SRCROOT)/include",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Cellar/sfml/2.5.1/lib,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};

@@ -1,0 +1,12 @@
+PopSize:330
+ScreenW:1920
+ScreenH:1080
+Laps:23
+ScaleX:1
+ScaleY:1
+GenTime:30.89
+Track:10
+CarFilePath:/Volumes/Data/GoogleDrive/Programming/Year_3/Second Semester/FYP/Project V3 (turn in points)/GeneticRaceAI v3/Build/Players/Player.txt
+NumTracks:10
+CarOrigin:6.539,25
+End
