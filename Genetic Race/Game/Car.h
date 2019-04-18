@@ -36,9 +36,18 @@ class Car
 
     void UpdatePlayerSpeedo(Overlay &TextOverlay);
     void UpdateLaptime(sf::Time& elapsedTime);
+    void AdjustFitness(float adjustment)
+    {
+        
+    }
     
     void ResetPosition();
     void Init();
+    void STOP()
+    {
+        STOPPED = true; 
+    }
+    bool STOPPED = false;
     
     void TheGameIsPaused(bool Pause)
     {
@@ -111,7 +120,7 @@ private:
     void UpdateLastCheckpointPosition();
 
     std::string GetSector(int x);
-    
+
     
     float LM =0;
     float MR = 0;

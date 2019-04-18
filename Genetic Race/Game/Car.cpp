@@ -4,7 +4,7 @@
 
 Car::Car(Data &constantdata) : speed(1), angle(0),nextPoint(0), ConstantData(constantdata),eyes(ConstantData)
 {
-
+    
 }
 void Car::Init()
 {
@@ -21,7 +21,7 @@ void Car::Init()
 }
 float Car::GetMaxSpeed()
 {
-    return maxspeed; 
+    return maxspeed;
 }
 Car::~Car()
 {
@@ -29,7 +29,7 @@ Car::~Car()
 
 float Car::getLapsComplete(bool playing)
 {
-    if(playing && !ACTIVE)
+    if(playing && !ACTIVE) //This is to help the sorting algorithm remove
         return 0.f;
     
     return float(CurrentLap+percentageComplete);
@@ -184,25 +184,25 @@ void Car::Timing(sf::Clock &clock)
     {
         TheGameIsPaused(false);
         /*
-        if(speed == 0 && B)
-        {
-            //Fitness = Helper::GetDistanceBetween2Points(ConstantData.StartPos, sf::Vector2f(Posx/ConstantData.ScaleX,Posy/ConstantData.ScaleY));
-            ACTIVE = false;
-            carSprite.setColor(sf::Color::Black);
-        }
+         if(speed == 0 && B)
+         {
+         //Fitness = Helper::GetDistanceBetween2Points(ConstantData.StartPos, sf::Vector2f(Posx/ConstantData.ScaleX,Posy/ConstantData.ScaleY));
+         ACTIVE = false;
+         carSprite.setColor(sf::Color::Black);
+         }
          */
         if(Started)
         {
             if(BPixelUnderCar() == 0 && GPixelUnderCar() == 255 && RPixelUnderCar() == 255)
             {
-               if(!MS1)
-               {
-                   MS1 = true;
-                   MS2 = false;
-                   MS3 = false;
-                   
-                   percentageComplete+= 0.01;
-               }
+                if(!MS1)
+                {
+                    MS1 = true;
+                    MS2 = false;
+                    MS3 = false;
+                    
+                    percentageComplete+= 0.01;
+                }
                 UpdateLastCheckpointPosition();
             }
             else if(BPixelUnderCar() == 0 && GPixelUnderCar() == 255 && RPixelUnderCar() == 250)
@@ -258,7 +258,7 @@ void Car::Timing(sf::Clock &clock)
                 laptime.push_back(Helper::AddUpVecFloat(CurrentSectors));
                 if(BestLapTime>Helper::AddUpVecFloat(CurrentSectors))
                 {
-                    BestLapTime = Helper::AddUpVecFloat(CurrentSectors); 
+                    BestLapTime = Helper::AddUpVecFloat(CurrentSectors);
                 }
                 PlayerLapTime=clock.restart();
                 CurrentLap++;
@@ -339,67 +339,66 @@ void Car::Timing(sf::Clock &clock)
 }
 void Car::AIMovement()
 {
-    D = false;B = false;L = false;R = false;
-    
 
-    
-    eyes.Update();
-    LM = std::llround(eyes.GetDistance(eSLine::eLeft, eSLine::eMiddle)*2) / 2.0;
-    MR = std::llround(eyes.GetDistance(eSLine::eMiddle, eSLine::eRight)*2) / 2.0;
-    CM = eyes.GetDistance(eSLine::eCenter, eSLine::eMiddle);
-    
-    if(!ConstantData.usePlayer)
-    {
-        D = true;
-        B = false;
-        
-        if( LM<MR )
+        D = false;B = false;L = false;R = false;
+        eyes.Update();
+        if(!ConstantData.usePlayer)
         {
-            L = true;
-        }
-        else if(LM > MR)
-        {
-            R = true;
-        }
+            LM = std::llround(eyes.GetDistance(eSLine::eLeft, eSLine::eMiddle)*2) / 2.0;
+            MR = std::llround(eyes.GetDistance(eSLine::eMiddle, eSLine::eRight)*2) / 2.0;
+            CM = eyes.GetDistance(eSLine::eCenter, eSLine::eMiddle);        
 
-        
-        if(eyes.breakingPointAlpha() >= chromosome.GetGene(0) && speed > chromosome.GetGene(8))
-        {
-            B = true;
-
-        }
-        if(eyes.GetColour(eSLine::eLeft).r == 255 && eyes.GetColour(eSLine::eLeft).g == 1 && eyes.GetColour(eSLine::eLeft).b >= chromosome.GetGene(1))
-        {
-            R = true;
-            L = false; 
-        }
-        else if(eyes.GetColour(eSLine::eRight).r == 255 && eyes.GetColour(eSLine::eRight).g == 1 && eyes.GetColour(eSLine::eRight).b >= chromosome.GetGene(1))
-        {
-            L = true;
-            R = false;
+            D = true;
+            B = false;
             
+            if( LM<MR )
+            {
+                L = true;
+            }
+            else if(LM > MR)
+            {
+                R = true;
+            }
+            
+            
+            if(eyes.breakingPointAlpha() >= chromosome.GetGene(0) && speed > chromosome.GetGene(8))
+            {
+                B = true;
+                
+            }
+            if(eyes.GetColour(eSLine::eLeft).r == 255 && eyes.GetColour(eSLine::eLeft).g == 1 && eyes.GetColour(eSLine::eLeft).b >= chromosome.GetGene(1))
+            {
+                R = true;
+                L = false;
+            }
+            else if(eyes.GetColour(eSLine::eRight).r == 255 && eyes.GetColour(eSLine::eRight).g == 1 && eyes.GetColour(eSLine::eRight).b >= chromosome.GetGene(1))
+            {
+                L = true;
+                R = false;
+                
+            }
         }
-    }
-    else
-    {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+        else
         {
-            R=1;
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+            {
+                R=1;
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+            {
+                B=1;
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+            {
+                L=1;
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+            {
+                D=1;
+            }
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-        {
-            B=1;
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-        {
-            L=1;
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-        {
-            D=1;
-        }
-    }
-PlayerMovement(D,R,L,B);
+        PlayerMovement(D,R,L,B);
+    
 }
 void Car::Seek(sf::Vector2f target)
 {
@@ -497,7 +496,7 @@ void Car::PlayerMovement(bool Drive,bool Right, bool Left, bool Brake)
         }
         speed = 0; //make sure car doesn't go backwards.
     }
-
+    
     sf::Vector2f oldVec = movementVec;
     
     sf::Transform t;
@@ -580,44 +579,41 @@ bool Car::IsOnTrack()
     else
         return false;
 }
- float Car::getFitness()
+float Car::getFitness()
 {
-    
-    Fitness = getLapsComplete(false);
-    auto fitnessTotal = Fitness;
+    auto fitnessTotal = getLapsComplete(false);
     fitnessTotal *= (301.f - BestLapTime);
-    
-    return fitnessTotal;
+    Fitness = fitnessTotal;
+    return Fitness;
 }
 
 float Car::getFastestLap()
 {
-    std::cout<<"FL = " << BestLapTime << "\n";
     return BestLapTime;
 }
 
 void Car::Render(sf::RenderWindow &window, std::pair<int,int> offset)
 {
     
-        carSprite.setPosition(Posx-offset.first,Posy-offset.second);
-        //carSprite.rotate(theta);
-        eyes.SetRotation(carSprite.getRotation());
-        eyes.SetPosition(sf::Vector2f(Posx-offset.first,Posy-offset.second),offset);
-
-        if(!ACTIVE)
+    carSprite.setPosition(Posx-offset.first,Posy-offset.second);
+    //carSprite.rotate(theta);
+    eyes.SetRotation(carSprite.getRotation());
+    eyes.SetPosition(sf::Vector2f(Posx-offset.first,Posy-offset.second),offset);
+    
+    if(!ACTIVE)
+    {
+        if(carColour.a > 0)
         {
-            if(carColour.a > 0)
-            {
             carColour.a--;
             carSprite.setColor(carColour);
-            }
         }
-        
-        window.draw(carSprite);
-
-        if(ACTIVE && ConstantData.ShowEyes)
-            eyes.Render(window);
-
+    }
+    
+    window.draw(carSprite);
+    
+    if(ACTIVE && ConstantData.ShowEyes)
+        eyes.Render(window);
+    
 }
 /*
  if(inputTime % 3 == 0)
@@ -649,91 +645,91 @@ void Car::Render(sf::RenderWindow &window, std::pair<int,int> offset)
  R = false;
  }
  
-float OldCM = CM;
-
-eyes.Update();
-LM = std::llround(eyes.GetDistance(eSLine::eLeft, eSLine::eMiddle)*2) / 2.0;
-MR = std::llround(eyes.GetDistance(eSLine::eMiddle, eSLine::eRight)*2) / 2.0;
-CM = eyes.GetDistance(eSLine::eCenter, eSLine::eMiddle);
-
-std::cout << "\nDistance Left - Center " << LM << "\nDistance Center - Right " << MR << "\nDistance Origin - Middle " << CM << std::endl;
-if(!ConstantData.usePlayer)
-{
-    D = true;
-    B = false;
-    if( LM<MR )
-    {
-        std::cout<<"LEFT"<<std::endl;
-        L = true;
-    }
-    else if(LM > MR)
-    {
-        std::cout<<"RIGHT"<<std::endl;
-        R = true;
-    }
-    std::cout<<(std::abs(OldCM - CM) )<<std::endl;
-    if(std::abs(OldCM - CM) > 5 && speed > 3)
-    {
-        B = true;
-        //  D = false;
-    }
-    
-    
-    
-    
-     if(chromosome.GetGene(0) == 0)
-     B = true;
-     else if(chromosome.GetGene(0) == 1)
-     D = true;
-     
-     if(chromosome.GetGene(1) == 0)
-     L = true;
-     else if(chromosome.GetGene(1) == 1)
-     R = true;
-     
-}
-else
-{
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-    {
-        R=1;
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-    {
-        B=1;
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-    {
-        L=1;
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-    {
-        D=1;
-    }
-    
-    if( LM < MR )
-    {
-        std::cout<<"LEFT"<<std::endl;
-        L = true;
-    }
-    else if(LM > MR)
-    {
-        std::cout<<"RIGHT"<<std::endl;
-        R = true;
-    }
-    std::cout<<(std::abs(OldCM - CM) )<<std::endl;
-    if(std::abs(OldCM - CM) > 5 && speed > 3)
-    {
-        B = true;
-        //  D = false;
-    }
-    
-}
-}
-inputTime++;
-PlayerMovement(D,R,L,B);
-
-*/
+ float OldCM = CM;
+ 
+ eyes.Update();
+ LM = std::llround(eyes.GetDistance(eSLine::eLeft, eSLine::eMiddle)*2) / 2.0;
+ MR = std::llround(eyes.GetDistance(eSLine::eMiddle, eSLine::eRight)*2) / 2.0;
+ CM = eyes.GetDistance(eSLine::eCenter, eSLine::eMiddle);
+ 
+ std::cout << "\nDistance Left - Center " << LM << "\nDistance Center - Right " << MR << "\nDistance Origin - Middle " << CM << std::endl;
+ if(!ConstantData.usePlayer)
+ {
+ D = true;
+ B = false;
+ if( LM<MR )
+ {
+ std::cout<<"LEFT"<<std::endl;
+ L = true;
+ }
+ else if(LM > MR)
+ {
+ std::cout<<"RIGHT"<<std::endl;
+ R = true;
+ }
+ std::cout<<(std::abs(OldCM - CM) )<<std::endl;
+ if(std::abs(OldCM - CM) > 5 && speed > 3)
+ {
+ B = true;
+ //  D = false;
+ }
+ 
+ 
+ 
+ 
+ if(chromosome.GetGene(0) == 0)
+ B = true;
+ else if(chromosome.GetGene(0) == 1)
+ D = true;
+ 
+ if(chromosome.GetGene(1) == 0)
+ L = true;
+ else if(chromosome.GetGene(1) == 1)
+ R = true;
+ 
+ }
+ else
+ {
+ if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+ {
+ R=1;
+ }
+ if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+ {
+ B=1;
+ }
+ if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+ {
+ L=1;
+ }
+ if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+ {
+ D=1;
+ }
+ 
+ if( LM < MR )
+ {
+ std::cout<<"LEFT"<<std::endl;
+ L = true;
+ }
+ else if(LM > MR)
+ {
+ std::cout<<"RIGHT"<<std::endl;
+ R = true;
+ }
+ std::cout<<(std::abs(OldCM - CM) )<<std::endl;
+ if(std::abs(OldCM - CM) > 5 && speed > 3)
+ {
+ B = true;
+ //  D = false;
+ }
+ 
+ }
+ }
+ inputTime++;
+ PlayerMovement(D,R,L,B);
+ 
+ */
 
 /*
  //Use this debug to output colour of pixels under the player car

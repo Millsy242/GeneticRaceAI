@@ -58,10 +58,11 @@ bool Game::Run()
                 Generation = popManager.getGeneration();
                 OverallPlayerLapTime = OverallPlayerLapTime.Zero;
             }
-            if(ConstantData.GenerationLength.asSeconds() <= OverallPlayerLapTime.asSeconds())
+            if(!ConstantData.StopOnLaps && ConstantData.GenerationLength.asSeconds() <= OverallPlayerLapTime.asSeconds())
             {
                 popManager.BreedNewPopulation();
             }
+
         }
     }
     if(GWindow.isOpen())

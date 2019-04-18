@@ -44,6 +44,7 @@ public:
     unsigned long SizeOfCarArray(); 
     
     Car &GetCar(int id);
+    Car CreateCar();
     
     void SetupChromosome(Chromosome &ch, float maxspeed); 
     
@@ -55,6 +56,7 @@ public:
     
     void WriteToCSV();
     
+    
      std::vector<float> TotalFitnessHistory;
     std::vector<float> AverageLapTimes;
         std::vector<float> BestLapTimes; 
@@ -65,11 +67,12 @@ private:
     int RouletteWheelSelection(std::vector<int> Orderedcarindex,std::vector<Car> &tempCarArray);
     
     float totalFitness = 0;
-    float FastestLap = 299; 
+    float FastestLap = 299;
+    float worstFitness = 0; 
     
     std::vector<Car> carArray;
    
-    
+    int NumFinished = 0; 
     Car Breed(Car M, Car D);
     
     Data &ConstantData;
@@ -77,7 +80,6 @@ private:
     int numDead = 0; 
     
     bool Racing = false;
-    int MutationRate = 70;
     
     int totalnumberofcars = 1;
     

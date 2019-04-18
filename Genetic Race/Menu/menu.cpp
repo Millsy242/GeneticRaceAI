@@ -84,7 +84,32 @@ void Menu::Input()
         GeneChooser();
         ImGui::EndTabItem();
     }
+    if(ImGui::BeginTabItem("Algorithm"))
+    {
+        AlgorithmEditor();
+        ImGui::EndTabItem();
+    }
     ImGui::EndTabBar();
+}
+
+void Menu::AlgorithmEditor()
+{
+    if(ImGui::Checkbox("Elitism on/off", &ConstantData.Elitism))
+    {
+        ConstantData.ElitismNum = 10;
+    }
+
+    
+    if(ConstantData.Elitism)
+    {
+        ImGui::SliderInt("Number of the Fastest Cars to push through", &ConstantData.ElitismNum, 1, ConstantData.PopSize );
+        ImGui::Checkbox("Should the chosen Elites be mutated? on/off", &ConstantData.MutateElites);
+    }
+    else if(ConstantData.ElitismNum != 0)
+    {
+        ConstantData.ElitismNum = 0;
+    }
+    ImGui::SliderInt("Mutation Rate", &ConstantData.MutationRate, 0, 100 );
 }
 void Menu::Update()
 {    
@@ -470,7 +495,6 @@ void Menu::GeneChooser()
 }
 void Menu::MainMenu()
 {
-    
     if(ImGui::Button("Play"))
     {
         ConstantData.Playing = true;
@@ -501,7 +525,7 @@ void Menu::MainMenu()
             ConstantData.laps = 10;
         }
     }
-    
+    ImGui::Checkbox("Limit to Laps", &ConstantData.StopOnLaps);
     ImGui::SliderInt("Laps",&ConstantData.laps, 1, 100);
     ImGui::SliderInt("Number of Agents", &ConstantData.PopSize, 1, 1000);
     ImGui::SliderInt("Horizontal Resolution", &ConstantData.ScreenWidth, 800, 3840);

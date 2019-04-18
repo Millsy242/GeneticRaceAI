@@ -165,7 +165,13 @@ struct Data
     bool ShowEyes = false;
     sf::Texture CarTexture;
     std::vector<std::pair<std::string,std::string>> savedChromosomes;
-    std::vector<Chromosome> Chromosomes; 
+    std::vector<Chromosome> Chromosomes;
+    bool Elitism = false;
+    bool MutateElites = false; 
+    int ElitismNum = 0;
+    int MutationRate = 70;
+    bool StopOnLaps = false;
+
 };
 
 #endif /* DataStruct_hpp */

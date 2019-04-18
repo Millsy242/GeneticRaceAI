@@ -113,6 +113,7 @@ class Menu
     void GeneChooser();
     void GeneEditor(); 
     void Load();
+    void AlgorithmEditor();
 
     sf::Texture track;
     sf::Sprite tracksprite; 
