@@ -62,11 +62,21 @@ void Chromosome::Mutate(int MutationRate)
         chancethisgeneswaps = Helper::random(0, 100);
         if(chancethisgeneswaps < MutationRate)
         {
-            bool higher = (bool)Helper::random(0, 1);
-            if(higher)
-                genes[i] = Helper::random(genes[i], maxvalues[i]);
-            else
-                genes[i] = Helper::random(minvalues[i], genes[i]);
+            if(maxvalues[i] - minvalues[i] > 1)
+            {
+                bool higher = (bool)Helper::random(0, 1);
+                if(higher)
+                    genes[i] = Helper::random(genes[i], maxvalues[i]);
+                else
+                    genes[i] = Helper::random(minvalues[i], genes[i]);
+            }
+            else // if the gene is a binary value
+            {
+                if(genes[i] == maxvalues[i])
+                    genes[i] = minvalues[i];
+                else
+                    genes[i] = maxvalues[i];
+            }
         }
     }
 }

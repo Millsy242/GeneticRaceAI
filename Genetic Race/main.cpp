@@ -36,21 +36,11 @@ int main()
             restart = game.Start();
             if(restart)
             {
-                std::cout<<"restarting menu" <<std::endl;
-                
                 ConstantData.Init();
                 Menu newMenu(ConstantData);
                 newMenu.Run();
                 restart = ConstantData.Playing;
             }
-            else
-            {
-                std::cout<<"restart is false after game.start()"<<std::endl;
-            }
-        }
-        else
-        {
-            std::cout<<"restart is false after menu"<<std::endl;
         }
     }
     ConstantData.End();

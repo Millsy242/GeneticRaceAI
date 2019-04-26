@@ -593,8 +593,7 @@ float Car::getFastestLap()
 }
 
 void Car::Render(sf::RenderWindow &window, std::pair<int,int> offset)
-{
-    
+{    
     carSprite.setPosition(Posx-offset.first,Posy-offset.second);
     //carSprite.rotate(theta);
     eyes.SetRotation(carSprite.getRotation());

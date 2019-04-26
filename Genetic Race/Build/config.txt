@@ -5,7 +5,7 @@ Laps:1
 ScaleX:1
 ScaleY:1
 GenTime:48.824
-Track:10
+Track:1
 CarFilePath:/Volumes/Data/GoogleDrive/Programming/Year_3/Second Semester/FYP/Project V3 (turn in points)/GeneticRaceAI v3/Build/Players/Player.txt
 NumTracks:10
 CarOrigin:6.539,17.764

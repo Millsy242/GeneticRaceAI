@@ -43,7 +43,7 @@ namespace Helper
             count++;
         }
     }
-   inline float dot(sf::Vector2f a, sf::Vector2f b)
+    inline float dot(sf::Vector2f a, sf::Vector2f b)
     {
         return a.x * b.x + a.y * b.y;
     }
@@ -54,10 +54,10 @@ namespace Helper
         return std::all_of(str.begin(), str.end(), ::isdigit); // C++11
     }
     
-   inline std::string floatTo3dpString(float f)
+   inline std::string floatTo3dpString(float f, int precision)
     {
         std::stringstream ss;
-        ss << std::fixed << std::setprecision(3) << f;
+        ss << std::fixed << std::setprecision(precision) << f;
         std::string mystring = ss.str();
         
         return mystring;
@@ -140,3 +140,4 @@ namespace Helper
 
 
 #endif /* Helper_hpp */
+

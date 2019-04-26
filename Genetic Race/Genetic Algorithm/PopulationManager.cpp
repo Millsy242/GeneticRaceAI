@@ -145,7 +145,10 @@ void PopulationManager::BreedNewPopulation()
     WriteToCSV();
     totalFitness = 0;
     float bestFitness = 0;
-    worstFitness = 1000;
+    //We can just use the first cars fitness as the temp worst fitness
+    //because if another car has a worse fitness, it will get replaced.
+    //This avoids errors where a large random number ends up somehow being smaller than the worst fitness in a population!
+    worstFitness = carArray[0].getFitness();
     float bestLap = 300;
     float SumofLaptime = 0;
     int NumCompletedaLap = 0;
@@ -384,8 +387,7 @@ void PopulationManager::UpdateStandings()
             if(GetCar(orderedcarindex[i]).STOPPED)
             {
                 entry += " FIN";
-            }
-            
+            }           
             
             Standings.push_back(entry);
         }
