@@ -36,6 +36,7 @@ int main()
             restart = game.Start();
             if(restart)
             {
+                ConstantData.End();
                 ConstantData.Init();
                 Menu newMenu(ConstantData);
                 newMenu.Run();

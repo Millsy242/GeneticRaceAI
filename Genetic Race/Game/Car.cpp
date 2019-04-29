@@ -14,9 +14,9 @@ void Car::Init()
     carSprite.setScale(2, 2);
     
     eyes.SetScale(carSprite.getScale().x, carSprite.getScale().y);
-    eyes.setSize(chromosome.GetGene(5), 1.0,chromosome.GetGene(4));
+    eyes.setSize(chromosome.GetGene(3), 1.0,chromosome.GetGene(2));
     
-    carColour = sf::Color(chromosome.GetGene(9),chromosome.GetGene(10),chromosome.GetGene(11));
+    carColour = sf::Color(chromosome.Colour[0]*255.f,chromosome.Colour[1]*255.f,chromosome.Colour[2]*255.f);
     carSprite.setColor(carColour);
 }
 float Car::GetMaxSpeed()
@@ -201,7 +201,7 @@ void Car::Timing(sf::Clock &clock)
                     MS2 = false;
                     MS3 = false;
                     
-                    percentageComplete+= 0.01;
+                    percentageComplete+= 0.005;
                 }
                 UpdateLastCheckpointPosition();
             }
@@ -213,7 +213,7 @@ void Car::Timing(sf::Clock &clock)
                     MS2 = true;
                     MS3 = false;
                     
-                    percentageComplete+= 0.01;
+                    percentageComplete+= 0.005;
                 }
                 UpdateLastCheckpointPosition();
             }
@@ -225,7 +225,7 @@ void Car::Timing(sf::Clock &clock)
                     MS2 = false;
                     MS3 = true;
                     
-                    percentageComplete+= 0.01;
+                    percentageComplete+= 0.005;
                 }
                 UpdateLastCheckpointPosition();
             }
@@ -361,7 +361,7 @@ void Car::AIMovement()
             }
             
             
-            if(eyes.breakingPointAlpha() >= chromosome.GetGene(0) && speed > chromosome.GetGene(8))
+            if(eyes.breakingPointAlpha() >= chromosome.GetGene(0) && speed > chromosome.GetGene(4))
             {
                 B = true;
                 

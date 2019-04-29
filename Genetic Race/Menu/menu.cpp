@@ -98,7 +98,7 @@ void Menu::AlgorithmEditor()
     {
         ConstantData.ElitismNum = 10;
     }
-
+    
     
     if(ConstantData.Elitism)
     {
@@ -158,81 +158,35 @@ void Menu::OrganiseStats()
         mStatisticsNumFrames = 0;
     }
 }
-void Menu::Load()
-{
-    Loaded = true;
-    if(user)
-    {
-        genereturns.clear();
-        sizeGene = ConstantData.database->getSize(eTable::eGene);
-        
-        if(sizeGene > 0)
-        {
-            for(int i{1}; i <= sizeGene; i++)
-            {
-                GeneTableStruct nextgene;
-                if(ConstantData.database->Select("SELECT * FROM Gene WHERE ID = " + std::to_string(i) + ";", nextgene))
-                {
-                    if(nextgene.ID != -1)
-                    {
-                        genereturns.push_back(nextgene);
-                    }
-                    
-                }
-                
-            }
-        }
-    }
-    if(Records)
-    {
-        Lapreturns.clear();
-        sizeLap = ConstantData.database->getSize(eTable::eLapTime);
-        if(sizeLap > 0)
-        {
-            for(int i{1}; i <= ConstantData.NumberOfTracks; i++)
-            {
-                LapTimeTableStruct nextRecord;
-                if(ConstantData.database->Select("SELECT * FROM LapTimeRecords WHERE TrackID = " + std::to_string(i) + ";", nextRecord))
-                {
-                    if(nextRecord.TrackID != -1)
-                    {
-                        Lapreturns.push_back(nextRecord);
-                    }
-                }
-                
-            }
-        }
-    }
-}
+
 void Menu::GeneEditor()
 {
     static bool CreateOwn = false;
-    if(ConstantData.savedChromosomes.size() > 0 || CreateOwn)
+    if(ImGui::Button("Create My Own"))
     {
-        
-        if(CreateOwn && ConstantData.Chromosomes.size() == 0)
+        CreateOwn = true;
+    }
+    if(ConstantData.savedChromosomes.size() > 0 || CreateOwn)
+    {        
+        if(CreateOwn )
         {
             Chromosome ch;
-            ch.AddGene(3,255,0);
-            ch.AddGene(2,1,0);
-            ch.AddGene(1,100,1);
-            ch.AddGene(2,1,0);
+            ch.AddGene(2,255,0);
+            ch.AddGene(1,1,0);
+            ch.AddGene(1,200,1);
             ch.AddGene(1,CarStats.MaxSpeed,0.5);
-            ch.AddGene(3,255,0);
             ch.EndAddingGenes();
             ConstantData.savedChromosomes.push_back(std::pair<std::string,std::string>("Custom Chromosome",ch.ToString()));
         }
         
         ImGui::ListBox("Selected Genes", &selectedgenesplace,SelectedItems );
-        if(ConstantData.savedChromosomes.size() != ConstantData.Chromosomes.size() || CreateOwn)
+        if(ConstantData.savedChromosomes.size() != ConstantData.Chromosomes.size() )
         {
             Chromosome ch;
-            ch.AddGene(3,255,0);
-            ch.AddGene(2,1,0);
-            ch.AddGene(1,100,1);
-            ch.AddGene(2,1,0);
+            ch.AddGene(2,255,0);
+            ch.AddGene(1,1,0);
+            ch.AddGene(1,200,1);
             ch.AddGene(1,CarStats.MaxSpeed,0.5);
-            ch.AddGene(3,255,0);
             ch.EndAddingGenes();
             
             SelectedItems.clear();
@@ -244,9 +198,15 @@ void Menu::GeneEditor()
                 ConstantData.Chromosomes.push_back(ch);
             }
             
+            
         }
         CreateOwn = false;
-        int Brake{ConstantData.Chromosomes[selectedgenesplace].GetGene(0)},Turnin{ConstantData.Chromosomes[selectedgenesplace].GetGene(1)},Turnout{ConstantData.Chromosomes[selectedgenesplace].GetGene(2)},Turninam{ConstantData.Chromosomes[selectedgenesplace].GetGene(3)},feeleryesno{ConstantData.Chromosomes[selectedgenesplace].GetGene(4)},FeelerLen{ConstantData.Chromosomes[selectedgenesplace].GetGene(5)},maxde{ConstantData.Chromosomes[selectedgenesplace].GetGene(6)},minde{ConstantData.Chromosomes[selectedgenesplace].GetGene(7)},minspeed{ConstantData.Chromosomes[selectedgenesplace].GetGene(8)},R{ConstantData.Chromosomes[selectedgenesplace].GetGene(9)},G{ConstantData.Chromosomes[selectedgenesplace].GetGene(10)},B{ConstantData.Chromosomes[selectedgenesplace].GetGene(11)};
+        
+        int Brake{ConstantData.Chromosomes[selectedgenesplace].GetGene(0)},
+        Turnin{ConstantData.Chromosomes[selectedgenesplace].GetGene(1)},
+        feeleryesno{ConstantData.Chromosomes[selectedgenesplace].GetGene(2)},
+        FeelerLen{ConstantData.Chromosomes[selectedgenesplace].GetGene(3)},
+        minspeed{ConstantData.Chromosomes[selectedgenesplace].GetGene(4)};
         
         if(ImGui::SliderInt("Braking Point", &Brake, ConstantData.Chromosomes[selectedgenesplace].GetMinValue(0), ConstantData.Chromosomes[selectedgenesplace].GetMaxValue(0)))
         {
@@ -256,46 +216,22 @@ void Menu::GeneEditor()
         {
             ConstantData.Chromosomes[selectedgenesplace].SetInt(1, Turnin);
         }
-        if(ImGui::SliderInt("Turn Out Point", &Turnout, ConstantData.Chromosomes[selectedgenesplace].GetMinValue(2), ConstantData.Chromosomes[selectedgenesplace].GetMaxValue(2)))
+        if(ImGui::SliderInt("Longer Central Feeler", &feeleryesno, ConstantData.Chromosomes[selectedgenesplace].GetMinValue(2), ConstantData.Chromosomes[selectedgenesplace].GetMaxValue(2)))
         {
-            ConstantData.Chromosomes[selectedgenesplace].SetInt(2, Turnout);
+            ConstantData.Chromosomes[selectedgenesplace].SetInt(2, feeleryesno);
         }
-        if(ImGui::SliderInt("Turn In Amount", &Turninam, ConstantData.Chromosomes[selectedgenesplace].GetMinValue(3), ConstantData.Chromosomes[selectedgenesplace].GetMaxValue(3)))
+        if(ImGui::SliderInt("Feeler Length", &FeelerLen, ConstantData.Chromosomes[selectedgenesplace].GetMinValue(3), ConstantData.Chromosomes[selectedgenesplace].GetMaxValue(3)))
         {
-            ConstantData.Chromosomes[selectedgenesplace].SetInt(3, Turninam);
+            ConstantData.Chromosomes[selectedgenesplace].SetInt(3, FeelerLen);
         }
-        if(ImGui::SliderInt("Longer Central Feeler", &feeleryesno, ConstantData.Chromosomes[selectedgenesplace].GetMinValue(4), ConstantData.Chromosomes[selectedgenesplace].GetMaxValue(4)))
+        if(ImGui::SliderInt("Lowest Speed", &minspeed, ConstantData.Chromosomes[selectedgenesplace].GetMinValue(4), ConstantData.Chromosomes[selectedgenesplace].GetMaxValue(4)))
         {
-            ConstantData.Chromosomes[selectedgenesplace].SetInt(4, feeleryesno);
+            ConstantData.Chromosomes[selectedgenesplace].SetInt(4, minspeed);
         }
-        if(ImGui::SliderInt("Feeler Length", &FeelerLen, ConstantData.Chromosomes[selectedgenesplace].GetMinValue(5), ConstantData.Chromosomes[selectedgenesplace].GetMaxValue(5)))
-        {
-            ConstantData.Chromosomes[selectedgenesplace].SetInt(5, FeelerLen);
-        }
-        if(ImGui::SliderInt("MaxDisttoEdge", &maxde, ConstantData.Chromosomes[selectedgenesplace].GetMinValue(6), ConstantData.Chromosomes[selectedgenesplace].GetMaxValue(6)))
-        {
-            ConstantData.Chromosomes[selectedgenesplace].SetInt(6, maxde);
-        }
-        if(ImGui::SliderInt("MinDIsttoedge", &minde, ConstantData.Chromosomes[selectedgenesplace].GetMinValue(7), ConstantData.Chromosomes[selectedgenesplace].GetMaxValue(7)))
-        {
-            ConstantData.Chromosomes[selectedgenesplace].SetInt(7, minde);
-        }
-        if(ImGui::SliderInt("Lowest Speed", &minspeed, ConstantData.Chromosomes[selectedgenesplace].GetMinValue(8), ConstantData.Chromosomes[selectedgenesplace].GetMaxValue(8)))
-        {
-            ConstantData.Chromosomes[selectedgenesplace].SetInt(8, minspeed);
-        }
-        if(ImGui::SliderInt("Red", &R, ConstantData.Chromosomes[selectedgenesplace].GetMinValue(9), ConstantData.Chromosomes[selectedgenesplace].GetMaxValue(9)))
-        {
-            ConstantData.Chromosomes[selectedgenesplace].SetInt(9, R);
-        }
-        if(ImGui::SliderInt("Green", &G, ConstantData.Chromosomes[selectedgenesplace].GetMinValue(10), ConstantData.Chromosomes[selectedgenesplace].GetMaxValue(10)))
-        {
-            ConstantData.Chromosomes[selectedgenesplace].SetInt(10, G);
-        }
-        if(ImGui::SliderInt("Blue", &B, ConstantData.Chromosomes[selectedgenesplace].GetMinValue(11), ConstantData.Chromosomes[selectedgenesplace].GetMaxValue(11)))
-        {
-            ConstantData.Chromosomes[selectedgenesplace].SetInt(11, B);
-        }
+        
+        
+        ImGui::ColorEdit3("Car Colour", ConstantData.Chromosomes[selectedgenesplace].Colour);
+        
         
         if(ImGui::Button("Reset this Gene"))
         {
@@ -349,37 +285,85 @@ void Menu::GeneEditor()
                 {
                     ConstantData.Chromosomes[Breedingspot.second].Mutate(MutationRate);
                     ConstantData.savedChromosomes[Breedingspot.second].second = ConstantData.Chromosomes[Breedingspot.second].ToString();
-                     CreateOwn = true;
+                    CreateOwn = true;
                 }
             }
             if(Breedingspot.first != -1 && Breedingspot.second != -1 )
             {
-            static char stringinput[128] = "My Player";
-            std::string defaultname = "My Player";
-            char hint[defaultname.length() + 1];
-            strcpy(hint, defaultname.c_str());
-            ImGui::InputTextWithHint("Name this new Chromosome", hint, stringinput, IM_ARRAYSIZE(stringinput));
-            if(ImGui::Button("Breed and add these genes"))
-            {
-                Chromosome newChromosome = ConstantData.Chromosomes[Breedingspot.first];
-                newChromosome.Crossover(ConstantData.Chromosomes[Breedingspot.first], ConstantData.Chromosomes[Breedingspot.second]);
-                
-                std::pair<std::string,std::string> newpair(std::string(stringinput), newChromosome.ToString());
-                ConstantData.savedChromosomes.push_back(newpair);
-                
-                std::string sql = "INSERT INTO GENE (Name,DateTime,TrackNumber,FastestLapTime,Genes,Generation) VALUES('"+ std::string(stringinput) + "', '" + Helper::GetDateTime() + "',  '" + std::to_string(99) + "',   '" + std::to_string(299) +   "',    '" + newChromosome.ToString()+"',     '" + std::to_string(1) +"');";
-                
-                ConstantData.database->Insert(sql);
-            }
+                static char stringinput[128] = "My Player";
+                std::string defaultname = "My Player";
+                char hint[defaultname.length() + 1];
+                strcpy(hint, defaultname.c_str());
+                ImGui::InputTextWithHint("Name this new Chromosome", hint, stringinput, IM_ARRAYSIZE(stringinput));
+                if(ImGui::Button("Breed and add these genes"))
+                {
+                    Chromosome ch;
+                    ch.AddGene(2,255,0);
+                    ch.AddGene(1,1,0);
+                    ch.AddGene(1,200,1);
+                    ch.AddGene(1,CarStats.MaxSpeed,0.5);
+                    ch.EndAddingGenes();
+                    ch.Crossover(ConstantData.Chromosomes[Breedingspot.first], ConstantData.Chromosomes[Breedingspot.second]);
+                    
+                    std::pair<std::string,std::string> newpair(std::string(stringinput), ch.ToString());
+                    ConstantData.savedChromosomes.push_back(newpair);
+                    
+                    std::string sql = "INSERT INTO GENE (Name,DateTime,TrackNumber,FastestLapTime,Genes,Generation) VALUES('"+ std::string(stringinput) + "', '" + Helper::GetDateTime() + "',  '" + std::to_string(99) + "',   '" + std::to_string(299) +   "',    '" + ch.ToString()+"',     '" + std::to_string(1) +"');";
+                    
+                    ConstantData.database->Insert(sql);
+                }
             }
         }
     }
     else
     {
         ImGui::Text("Please go to the GeneChooser tab and select some genes to edit!\nOr Press the button below to create your own!");
-        if(ImGui::Button("Create My Own"))
+
+    }
+}
+void Menu::Load()
+{
+    Loaded = true;
+    if(user)
+    {
+        genereturns.clear();
+        sizeGene = ConstantData.database->getSize(eTable::eGene);
+        
+        if(sizeGene > 0)
         {
-            CreateOwn = true;
+            for(int i{1}; i <= sizeGene; i++)
+            {
+                GeneTableStruct nextgene;
+                if(ConstantData.database->Select("SELECT * FROM Gene WHERE ID = " + std::to_string(i) + ";", nextgene))
+                {
+                    if(nextgene.ID != -1)
+                    {
+                        genereturns.push_back(nextgene);
+                    }
+                    
+                }
+                
+            }
+        }
+    }
+    if(Records)
+    {
+        Lapreturns.clear();
+        sizeLap = ConstantData.database->getSize(eTable::eLapTime);
+        if(sizeLap > 0)
+        {
+            for(int i{1}; i <= ConstantData.NumberOfTracks; i++)
+            {
+                LapTimeTableStruct nextRecord;
+                if(ConstantData.database->Select("SELECT * FROM LapTimeRecords WHERE TrackID = " + std::to_string(i) + ";", nextRecord))
+                {
+                    if(nextRecord.TrackID != -1)
+                    {
+                        Lapreturns.push_back(nextRecord);
+                    }
+                }
+                
+            }
         }
     }
 }

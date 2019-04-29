@@ -38,7 +38,7 @@ void PopulationManager::CreateStartingPopulation()
         newCar.LoadFromFile();
         SetupChromosome(newCar.chromosome,newCar.GetMaxSpeed());
         if(i<ConstantData.Chromosomes.size())
-        {
+        {           
             newCar.chromosome = ConstantData.Chromosomes[i];
             newCar.id = ConstantData.savedChromosomes[i].first;
         }
@@ -50,12 +50,19 @@ void PopulationManager::CreateStartingPopulation()
 }
 void PopulationManager::SetupChromosome(Chromosome &ch, float maxspeed)
 {
-    ch.AddGene(3,255,0);
-    ch.AddGene(2,1,0);
-    ch.AddGene(1,100,1);
-    ch.AddGene(2,1,0);
+    ch.AddGene(2,255,0);
+    ch.AddGene(1,1,0);
+    ch.AddGene(1,200,1);
     ch.AddGene(1,maxspeed,0.5);
-    ch.AddGene(3,255,0);
+    /*
+     ch.AddGene(3,255,0);
+     ch.AddGene(2,1,0);
+     ch.AddGene(1,100,1);
+     ch.AddGene(2,1,0);
+     ch.AddGene(1,maxspeed,0.5);
+     ch.AddGene(3,255,0);
+     */
+    //ch.AddGene(1, 4294967295,255); //replace colour genes with this
     ch.EndAddingGenes();
 }
 void PopulationManager::WriteToCSV()
@@ -255,7 +262,7 @@ void PopulationManager::UpdateCars()
         {
             if(!carArray[i].STOPPED)
             {
-                if(!carArray[i].STOPPED && (ConstantData.laps <= carArray[i].getLapsComplete(true)))
+                if(ConstantData.StopOnLaps && (ConstantData.laps < carArray[i].getLapsComplete(true)))
                 {
                     NumFinished++;
                     GetCar(i).STOP();
@@ -269,11 +276,10 @@ void PopulationManager::UpdateCars()
                 if(!carArray[i].GetActive())
                 {
                     numDead++;
-                    
                 }
             }
         }
-        if(numDead == numCars() || (ConstantData.StopOnLaps && (numDead + NumFinished >= numCars())))
+        if(numDead == numCars() ||  (numDead + NumFinished >= numCars()))
         {
             BreedNewPopulation();
         }

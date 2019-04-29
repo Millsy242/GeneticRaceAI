@@ -10,6 +10,7 @@
 #define Chromosome_hpp
 #include <iostream>
 #include <vector>
+#include <string> 
 
 class Chromosome
 {
@@ -26,14 +27,17 @@ public:
     int GetMaxValue(int pos);
     int GetMinValue(int pos);
     std::string ToString();
-    void FromString(std::string ch); 
+    void FromString(std::string ch);
+    float Colour[3] {0.f,0.f,0.f};
+    
     
 private:
     std::vector<int> genes;
     std::vector<int> maxvalues;
     std::vector<int> minvalues;
     int dnaLength = 0;
-    bool Finished = false; 
+    bool Finished = false;
+    
     
     
 };
