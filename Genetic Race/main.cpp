@@ -50,7 +50,13 @@ int main()
 }
 
 
+//button to reintroduce genes
+//option to re-add cars mid session ( :/ )
+//save all settings DONE
+//fix camera DONE
 
+//output more data such as all laps + gen time + mut rate etc.
+//show selected cars genes when paused
 
 
 

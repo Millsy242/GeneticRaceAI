@@ -1,12 +1,17 @@
-PopSize:7
+PopSize:202
 ScreenW:1920
 ScreenH:1080
 Laps:4
 ScaleX:1
 ScaleY:1
 GenTime:63.172
-Track:2
-CarFilePath:/Volumes/Data/GoogleDrive/Programming/Year_3/Second Semester/FYP/Project V3 (turn in points)/GeneticRaceAI v3/Build/Players/Player.txt
+Track:1
+CarFilePath:/Volumes/Data/GoogleDrive/Programming/Year_3/Second Semester/FYP/Genetic Race/Genetic Race/Build/Players/Player.txt
 NumTracks:10
 CarOrigin:6.539,17.764
+LapLimit:0
+EnableElitism:1
+ElitismNum:10
+MutateElities:0
+MutationRate:70
 End

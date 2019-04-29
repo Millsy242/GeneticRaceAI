@@ -109,6 +109,31 @@ struct Data
                     line = line.substr(std::string("CarOrigin:").size());
                     CarOrigin = sf::Vector2f(std::stof(line.substr(0,line.find(","))),std::stof(line.substr(line.find(",")+1, line.size())));
                 }
+                else if(!line.find("LapLimit"))
+                {
+                    line = line.substr(std::string("LapLimit:").size());
+                    StopOnLaps = (bool)std::stoi(line);
+                }
+                else if(!line.find("EnableElitism"))
+                {
+                    line = line.substr(std::string("EnableElitism:").size());
+                    Elitism = (bool)std::stoi(line);
+                }
+                else if(!line.find("ElitismNum"))
+                {
+                    line = line.substr(std::string("ElitismNum:").size());
+                    ElitismNum = std::stoi(line);
+                }
+                else if(!line.find("MutateElities"))
+                {
+                    line = line.substr(std::string("MutateElities:").size());
+                    MutateElites = (bool)std::stoi(line);
+                }
+                else if(!line.find("MutationRate"))
+                {
+                    line = line.substr(std::string("MutationRate:").size());
+                    MutationRate = std::stoi(line);
+                }
             }
             myfile.close();
         }
@@ -135,6 +160,11 @@ struct Data
                     "\nCarFilePath:"<< std::string(CarFilePath) <<
                     "\nNumTracks:"<< NumberOfTracks <<
                     "\nCarOrigin:"<< CarOrigin.x << ","<<CarOrigin.y<<
+                    "\nLapLimit:"<< StopOnLaps <<
+                    "\nEnableElitism:"<< Elitism <<
+                    "\nElitismNum:" << ElitismNum <<
+                    "\nMutateElities:"<<MutateElites <<
+                    "\nMutationRate:"<<MutationRate<<
                     "\nEnd";
             myfile.close();
         }
