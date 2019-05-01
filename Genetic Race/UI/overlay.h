@@ -16,34 +16,27 @@ class Overlay
 
         bool loadFont(std::string FontName, std::string Font_FilePath);
         bool CreateOverlay(std::string TextName, std::string FontName, int CharacterSize = 20, bool setOriginMiddle = true, std::string data = "_UNASSIGNED_");
-        void DeleteOverlay(std::string TextName); 
 
         void ChangeFont(std::string TextName, std::string FontName, int CharacterSize = 10);
-
         void RenderAllOverlays(sf::RenderWindow &window);
         void RenderSpecificOverlay(std::string TextName,sf::RenderWindow &window, sf::Vector2f position = sf::Vector2f());
-
         void SetDataOutput(std::string TextName, std::string Data,sf::Vector2f position = sf::Vector2f());
         void SetDataOutput(std::string TextName, int Data,sf::Vector2f position = sf::Vector2f());
         void SetDataOutput(std::string TextName, float Data,sf::Vector2f position = sf::Vector2f());
         void AddToDataOutput(std::string TextName, std::string data);
         void ClearData(std::string TextName);
         void SetColour(std::string TextName, sf::Color Colour);
-        sf::Color GetColour(std::string TextName);
         void SetGLobalScale(float x, float y);
         void SetScale(std::string TextName, float x, float y);
-    
-    
-        std::vector<std::string> GetPlayerNames();
-
+        void DeleteOverlay(std::string TextName);
         void ChangeSize(std::string TextName, int CharacterSize);
         void SetPosition(std::string TextName, sf::Vector2f position);
-    
-        void ClearAll(); 
-    
         void SetStyle(std::string TextName, sf::Uint32 style);
-
-    protected:
+        void ClearAll();
+    
+     std::vector<std::string> GetPlayerNames();
+    
+            sf::Color GetColour(std::string TextName);
 
     private:
 

@@ -1,9 +1,7 @@
 //
 //  Database.hpp
-//  t02
 //
 //  Created by Daniel Harvey on 08/04/2019.
-//  Copyright © 2019 Cordry, Julien. All rights reserved.
 //
 
 #ifndef Database_hpp
@@ -20,7 +18,6 @@ enum eTable
     eGene = 0,eLapTime = 1
 };
 
-
 struct GeneTableStruct
 {
     const eTable type = eTable::eGene;
@@ -36,7 +33,6 @@ struct GeneTableStruct
     {
         return DateTime + " - " + Name + " - " + std::to_string(TrackNum) + " - " + std::to_string(FastestLap);
     }
-
 };
 
 struct LapTimeTableStruct
@@ -52,9 +48,7 @@ struct LapTimeTableStruct
     {
             return DateTime + " - " + Name + " - " + std::to_string(TrackID) + " - " + std::to_string(LapTime);
     }
-
 };
-
 
 class Database
 {
@@ -66,19 +60,16 @@ public:
     bool Close();
     bool Select(std::string query, GeneTableStruct &gts);
     bool Select(std::string query, LapTimeTableStruct &lts);
-    int getSize(eTable table);
     bool Insert(std::string sql);
     bool Delete(std::string sql);
+    
+    int getSize(eTable table);
     
 private:
     void Error();
     bool CreateTable(const char *path, std::string sql);
     sqlite3* DB;
     const char *Lastpath;
-    
-
-
-    
 };
 
 

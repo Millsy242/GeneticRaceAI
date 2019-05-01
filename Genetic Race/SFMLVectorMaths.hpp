@@ -1,6 +1,5 @@
 //
 //  SFMLVectorMaths.hpp
-//  t02
 //
 //  Edited by Daniel Harvey on 13/03/2019.
 //

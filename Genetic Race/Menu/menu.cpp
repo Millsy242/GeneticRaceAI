@@ -1,10 +1,9 @@
-
 #include "menu.h"
 #include "osdialog.h"
 #include "Database.hpp"
 #include "imgui_user.h"
 
-Menu::Menu(Data &constantdata) : window(sf::VideoMode(800, 800), "Car Racing Lobby"), ConstantData(constantdata)
+Menu::Menu(Data &constantdata) : MenuWindow(sf::VideoMode(800, 800), "Car Racing Lobby"), ConstantData(constantdata)
 {
     //ctor
     
@@ -19,27 +18,28 @@ void Menu::Run()
 {
     Setup();
     Loop();
-    ConstantData.WindowPos = window.getPosition();
+    ConstantData.WindowPos = MenuWindow.getPosition();
     ConstantData.SaveDataToFile();
-    window.close();
+    MenuWindow.close();
     ImGui::SFML::Shutdown();
 }
 void Menu::Setup()
 {
-    if(!window.isOpen())
+    if(!MenuWindow.isOpen())
     {
-        window.create(sf::VideoMode(800, 600), "Car Racing ");
+        MenuWindow.create(sf::VideoMode(800, 600), "Car Racing ");
     }
-    window.setFramerateLimit(62);
-    ImGui::SFML::Init(window);
+    MenuWindow.setFramerateLimit(62);
+    ImGui::SFML::Init(MenuWindow);
+
     //setup SMFL
-    LobbyItems = Overlay();
-    LobbyItems.loadFont("Font", "Media/fonts/mgbold.ttf");
+    MenuOverlay = Overlay();
+    MenuOverlay.loadFont("Font", "Genetic Race Data/Media/fonts/mgbold.ttf");
     
     
-    LobbyItems.CreateOverlay("Statistics", "Font",10,false);
+    MenuOverlay.CreateOverlay("Statistics", "Font",10,false);
     
-    track.loadFromFile("Circuits/TrackVis_" + std::to_string(ConstantData.TrackNumber) + ".png");
+    track.loadFromFile("Genetic Race Data/Circuits/TrackVis_" + std::to_string(ConstantData.TrackNumber) + ".png");
     
     tracksprite.setTexture(track);
     tracksprite.setScale(0.2, 0.2);
@@ -47,12 +47,12 @@ void Menu::Setup()
     
     CarStats.LoadFromFile(ConstantData.CarFilePath);
     ConstantData.database = new Database();
-    ConstantData.database->Open("./SQDatabase.db");
+    ConstantData.database->Open("Genetic Race Data/SQDatabase.db");
     
 }
 void Menu::Loop()
 {
-    while( window.isOpen() && !ConstantData.Playing)
+    while( MenuWindow.isOpen() && !ConstantData.Playing)
     {
         Update();
         Input();
@@ -116,18 +116,18 @@ void Menu::Update()
     elapsedTime = clock.restart();
     TotalTime += timeSinceLastUpdate/10.f;
     timeSinceLastUpdate += elapsedTime;
-    ImGui::SFML::Update(window, elapsedTime);
+    ImGui::SFML::Update(MenuWindow, elapsedTime);
     while (timeSinceLastUpdate > TimePerFrame)
     {
         timeSinceLastUpdate -= TimePerFrame;
         
         sf::Event e;
-        while (window.pollEvent(e))
+        while (MenuWindow.pollEvent(e))
         {
             ImGui::SFML::ProcessEvent(e);
             if (e.type == sf::Event::Closed)
             {
-                window.close();
+                MenuWindow.close();
             }
         }
         
@@ -136,10 +136,10 @@ void Menu::Update()
 }
 void Menu::Render()
 {
-    window.clear(sf::Color::Black);
-    LobbyItems.RenderAllOverlays(window);
-    ImGui::SFML::Render(window);
-    window.display();
+    MenuWindow.clear(sf::Color::Black);
+    MenuOverlay.RenderAllOverlays(MenuWindow);
+    ImGui::SFML::Render(MenuWindow);
+    MenuWindow.display();
 }
 
 void Menu::OrganiseStats()
@@ -151,7 +151,7 @@ void Menu::OrganiseStats()
     
     if (mStatisticsUpdateTime >= sf::seconds(1.0f))
     {
-        LobbyItems.SetDataOutput("Statistics", "Frames / Second = " + std::to_string(mStatisticsNumFrames) + "\n" +
+        MenuOverlay.SetDataOutput("Statistics", "Frames / Second = " + std::to_string(mStatisticsNumFrames) + "\n" +
                                  "Time / Update = " + std::to_string(mStatisticsUpdateTime.asMicroseconds() / mStatisticsNumFrames) + "us");
         
         mStatisticsUpdateTime -= sf::seconds(1.0f);
@@ -239,56 +239,56 @@ void Menu::GeneEditor()
         }
         if(ImGui::Button("Add Gene to Breeding Slot 1"))
         {
-            Breedingspot.first = selectedgenesplace;
+            BreedingPair.first = selectedgenesplace;
         }
         if(ImGui::Button("Add Gene to Breeding Slot 2"))
         {
-            Breedingspot.second = selectedgenesplace;
+            BreedingPair.second = selectedgenesplace;
         }
         std::string slot1;
         std::string slot2;
-        if(Breedingspot.first == -1)
+        if(BreedingPair.first == -1)
         {
             slot1 = "Breeding Spot 1 = EMPTY ";
         }
         else
         {
-            slot1 = "Breeding Spot 1 = " + SelectedItems[Breedingspot.first].substr(3) + " ";
+            slot1 = "Breeding Spot 1 = " + SelectedItems[BreedingPair.first].substr(3) + " ";
         }
-        if(Breedingspot.second == -1)
+        if(BreedingPair.second == -1)
         {
             slot2 = "Breeding Spot 2 = EMPTY ";
         }
         else
         {
-            slot2 = "Breeding Spot 2 = " + SelectedItems[Breedingspot.second].substr(3) + " ";
+            slot2 = "Breeding Spot 2 = " + SelectedItems[BreedingPair.second].substr(3) + " ";
         }
         ImGui::Text("%s", slot1.c_str());
         ImGui::Text("%s", slot2.c_str());
-        if(Breedingspot.first != -1 || Breedingspot.second != -1 )
+        if(BreedingPair.first != -1 || BreedingPair.second != -1 )
         {
             ImGui::Text("Mutate a chromosome, the higher the Mutation rate, the more chance each gene will be mutated");
             static int MutationRate = 70;
             ImGui::SliderInt("MutationRate", &MutationRate,0,100);
-            if(Breedingspot.first != -1 )
+            if(BreedingPair.first != -1 )
             {
                 if(ImGui::Button("Mutate Slot 1"))
                 {
-                    ConstantData.Chromosomes[Breedingspot.first].Mutate(MutationRate);
-                    ConstantData.savedChromosomes[Breedingspot.first].second = ConstantData.Chromosomes[Breedingspot.first].ToString();
+                    ConstantData.Chromosomes[BreedingPair.first].Mutate(MutationRate);
+                    ConstantData.savedChromosomes[BreedingPair.first].second = ConstantData.Chromosomes[BreedingPair.first].ToString();
                     CreateOwn = true;
                 }
             }
-            if(Breedingspot.second != -1)
+            if(BreedingPair.second != -1)
             {
                 if(ImGui::Button("Mutate Slot 2"))
                 {
-                    ConstantData.Chromosomes[Breedingspot.second].Mutate(MutationRate);
-                    ConstantData.savedChromosomes[Breedingspot.second].second = ConstantData.Chromosomes[Breedingspot.second].ToString();
+                    ConstantData.Chromosomes[BreedingPair.second].Mutate(MutationRate);
+                    ConstantData.savedChromosomes[BreedingPair.second].second = ConstantData.Chromosomes[BreedingPair.second].ToString();
                     CreateOwn = true;
                 }
             }
-            if(Breedingspot.first != -1 && Breedingspot.second != -1 )
+            if(BreedingPair.first != -1 && BreedingPair.second != -1 )
             {
                 static char stringinput[128] = "My Player";
                 std::string defaultname = "My Player";
@@ -303,7 +303,7 @@ void Menu::GeneEditor()
                     ch.AddGene(1,200,1);
                     ch.AddGene(1,CarStats.MaxSpeed,0.5);
                     ch.EndAddingGenes();
-                    ch.Crossover(ConstantData.Chromosomes[Breedingspot.first], ConstantData.Chromosomes[Breedingspot.second]);
+                    ch.Crossover(ConstantData.Chromosomes[BreedingPair.first], ConstantData.Chromosomes[BreedingPair.second]);
                     
                     std::pair<std::string,std::string> newpair(std::string(stringinput), ch.ToString());
                     ConstantData.savedChromosomes.push_back(newpair);
@@ -318,7 +318,7 @@ void Menu::GeneEditor()
     else
     {
         ImGui::Text("Please go to the GeneChooser tab and select some genes to edit!\nOr Press the button below to create your own!");
-
+        
     }
 }
 void Menu::Load()
@@ -463,9 +463,21 @@ void Menu::GeneChooser()
             }
             Load();
         }
+        if(ImGui::Button("Remove Selected Item from Selected Genes"))
+        {
+            if(SelectedItems.size() > 0 && selectedgenesplace < SelectedItems.size() && ConstantData.savedChromosomes.size() > 0 && selectedgenesplace < ConstantData.savedChromosomes.size())
+            {
+                SelectedItems.erase(SelectedItems.begin() + selectedgenesplace);
+                ConstantData.savedChromosomes.erase(ConstantData.savedChromosomes.begin() + selectedgenesplace);
+            }
+        }
+        if(ImGui::Button("Remove All Items from Selected Genes"))
+        {
+            SelectedItems.clear();
+            ConstantData.savedChromosomes.clear();
+        }
     }
-    
-    //Bad
+
     SelectedItems.clear();
     for(int i{0}; i< ConstantData.savedChromosomes.size(); i++)
     {
@@ -489,22 +501,23 @@ void Menu::MainMenu()
         if(hey)
         {
             ConstantData.Playing = false;
-            window.close();
+            MenuWindow.close();
         }
     }
+    ImGui::Checkbox("FullScreen", &ConstantData.FullScreen);
     if(ImGui::Button("Debug: UsePlayer"))
     {
         if(!ConstantData.usePlayer)
         {
             ConstantData.usePlayer = true;
-            window.setTitle("Manual Control - DEBUG");
+            MenuWindow.setTitle("Manual Control - DEBUG");
             ConstantData.PopSize = 1;
             ConstantData.laps = 100;
         }
         else
         {
             ConstantData.usePlayer = false;
-            window.setTitle("AI Control - DEBUG");
+            MenuWindow.setTitle("AI Control - DEBUG");
             ConstantData.PopSize = 50;
             ConstantData.laps = 10;
         }
@@ -572,7 +585,7 @@ void Menu::CarEditor()
     if(ImGui::Button("Load"))
     {
         //osdialog_filters *filters = osdialog_filters_parse(":txt;");
-        char *FilePath = osdialog_file(OSDIALOG_OPEN, "./Players", "test", NULL);
+        char *FilePath = osdialog_file(OSDIALOG_OPEN, "Genetic Race Data/Players", "test", NULL);
         if (FilePath)
         {
             

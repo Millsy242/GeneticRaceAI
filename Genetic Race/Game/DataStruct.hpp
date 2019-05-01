@@ -5,7 +5,6 @@
 //  Created by HARVEY, DANIEL on 26/11/2018.
 //
 //
-
 #ifndef DataStruct_hpp
 #define DataStruct_hpp
 
@@ -15,7 +14,6 @@
 #include <fstream>
 #include <string>
 #include "Chromosome.hpp"
-
 
 struct LapTimeTableStruct;
 class Database;
@@ -28,7 +26,7 @@ struct Data
         WindowPos = sf::Vector2i(0,0);
         StartPos = sf::Vector2f(0.f,0.f);
         Playing = false;
-        if(!CarTexture.loadFromFile("images/car.png"))
+        if(!CarTexture.loadFromFile("Genetic Race Data/images/car.png"))
         {
             std::cerr << "Cant load Car Texture" << std::endl;
         }
@@ -38,12 +36,12 @@ struct Data
     }
     void End()
     {
-        SaveDataToFile(); 
+        SaveDataToFile();
     }
     
     void LoadDataFromFile()
     {
-        std::string line;        
+        std::string line;
         std::ifstream myfile ("Config.txt");
         bool exit = false;
         if (myfile.is_open())
@@ -134,6 +132,11 @@ struct Data
                     line = line.substr(std::string("MutationRate:").size());
                     MutationRate = std::stoi(line);
                 }
+                else if(!line.find("FullScreen"))
+                {
+                    line = line.substr(std::string("FullScreen:").size());
+                    FullScreen = (bool)std::stoi(line);
+                }
             }
             myfile.close();
         }
@@ -142,30 +145,31 @@ struct Data
             SaveDataToFile();
         }
     }
-
+    
     void SaveDataToFile()
     {
-        std::ofstream myfile ("Config.txt");
-
+        std::ofstream myfile ("Genetic Race Data/Config.txt");
+        
         if (myfile.is_open())
         {
             myfile << "PopSize:" << PopSize <<
-                    "\nScreenW:"<< ScreenWidth <<
-                    "\nScreenH:"<< ScreenHeight <<
-                    "\nLaps:"<< laps <<
-                    "\nScaleX:"<< ScaleX <<
-                    "\nScaleY:"<< ScaleY <<
-                    "\nGenTime:"<< GenerationLength.asSeconds() <<
-                    "\nTrack:"<< TrackNumber <<
-                    "\nCarFilePath:"<< std::string(CarFilePath) <<
-                    "\nNumTracks:"<< NumberOfTracks <<
-                    "\nCarOrigin:"<< CarOrigin.x << ","<<CarOrigin.y<<
-                    "\nLapLimit:"<< StopOnLaps <<
-                    "\nEnableElitism:"<< Elitism <<
-                    "\nElitismNum:" << ElitismNum <<
-                    "\nMutateElities:"<<MutateElites <<
-                    "\nMutationRate:"<<MutationRate<<
-                    "\nEnd";
+            "\nScreenW:"<< ScreenWidth <<
+            "\nScreenH:"<< ScreenHeight <<
+            "\nLaps:"<< laps <<
+            "\nScaleX:"<< ScaleX <<
+            "\nScaleY:"<< ScaleY <<
+            "\nGenTime:"<< GenerationLength.asSeconds() <<
+            "\nTrack:"<< TrackNumber <<
+            "\nCarFilePath:"<< std::string(CarFilePath) <<
+            "\nNumTracks:"<< NumberOfTracks <<
+            "\nCarOrigin:"<< CarOrigin.x << ","<<CarOrigin.y<<
+            "\nLapLimit:"<< StopOnLaps <<
+            "\nEnableElitism:"<< Elitism <<
+            "\nElitismNum:" << ElitismNum <<
+            "\nMutateElities:"<<MutateElites <<
+            "\nMutationRate:"<<MutationRate<<
+            "\nFullScreen:"<<FullScreen<<
+            "\nEnd";
             myfile.close();
         }
     }
@@ -175,33 +179,36 @@ struct Data
     int laps = 1;
     int ScaleX = 1;
     int ScaleY = 1;
-    sf::Time GenerationLength = sf::seconds(10.f);
     int TrackNumber = 1;
     int NumberOfTracks = 1;
-    sf::Vector2f CarOrigin; 
+    int ElitismNum = 0;
+    int MutationRate = 70;
     
-    std::string CarFilePath = "Players/Player.txt"; 
+    bool Playing = false;
+    bool usePlayer = false;
+    bool ShowEyes = false;
+    bool Elitism = false;
+    bool MutateElites = false;
+    bool StopOnLaps = false;
+    bool FullScreen = false;
+    
+    sf::Time GenerationLength = sf::seconds(10.f);
     sf::Image *Track;
     sf::Sprite *carSprite;
     sf::Vector2f StartPos;
-    bool Playing = false;
-    bool usePlayer = false;
+    sf::Vector2f CarOrigin;
     sf::Vector2i WindowPos;
-    std::vector<std::pair<int,int>> pointvector;
     sf::Time elapsedTime;
     sf::Clock clock;
-    Database *database;
-    LapTimeTableStruct* FastestLapTimeData; 
-    bool ShowEyes = false;
     sf::Texture CarTexture;
+    
+    std::string CarFilePath = "Genetic Race Data/Players/Player.txt";
     std::vector<std::pair<std::string,std::string>> savedChromosomes;
     std::vector<Chromosome> Chromosomes;
-    bool Elitism = false;
-    bool MutateElites = false; 
-    int ElitismNum = 0;
-    int MutationRate = 70;
-    bool StopOnLaps = false;
-
+    
+    Database *database;
+    LapTimeTableStruct* FastestLapTimeData;
+    
 };
 
 #endif /* DataStruct_hpp */

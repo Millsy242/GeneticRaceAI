@@ -1,9 +1,7 @@
 //
 //  imgui-user.h
-//  t02
 //
 //  Created by Daniel Harvey on 13/04/2019.
-//  Copyright © 2019 Cordry, Julien. All rights reserved.
 //
 
 #ifndef imgui_user_h

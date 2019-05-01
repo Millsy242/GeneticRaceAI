@@ -1,14 +1,16 @@
 #include "Car.h"
 #include "Helper.hpp"
-#include "SFMLVectorMaths.hpp"
 
 Car::Car(Data &constantdata) : speed(1), angle(0),nextPoint(0), ConstantData(constantdata),eyes(ConstantData)
 {
     
 }
+Car::~Car()
+{
+}
+
 void Car::Init()
 {
-    location = ConstantData.StartPos;
     carSprite.setTexture(*ConstantData.carSprite->getTexture());
     carSprite.setOrigin(ConstantData.CarOrigin );
     carSprite.setScale(2, 2);
@@ -19,73 +21,8 @@ void Car::Init()
     carColour = sf::Color(chromosome.Colour[0]*255.f,chromosome.Colour[1]*255.f,chromosome.Colour[2]*255.f);
     carSprite.setColor(carColour);
 }
-float Car::GetMaxSpeed()
-{
-    return maxspeed;
-}
-Car::~Car()
-{
-}
 
-float Car::getLapsComplete(bool playing)
-{
-    if(playing && !ACTIVE) //This is to help the sorting algorithm remove
-        return 0.f;
-    
-    return float(CurrentLap+percentageComplete);
-}
-
-bool Car::LoadFromFile()
-{
-    std::string line;
-    
-    std::ifstream myfile(ConstantData.CarFilePath);
-    bool exit = false;
-    int i = 0;
-    if (myfile.is_open())
-    {
-        while ( getline (myfile,line) && !exit)
-        {
-            switch(i)
-            {
-                case(0):
-                    break;
-                case(1):
-                    maxSpeed = std::stof(line);
-                    break;
-                case(2):
-                    acc = std::stof(line) ;
-                    break;
-                case(3):
-                    drag = std::stof(line);
-                    break;
-                case(4):
-                    brakepower = std::stof(line) ;
-                    break;
-                case(5):
-                    turnSpeed = std::stof(line) ;
-                    break;
-                case(6):
-                    offTrackSpeed = std::stof(line);
-                    break;
-                case(7):
-                    break;
-                case(8):
-                    exit = true;
-                    break;
-                default:
-                    break;
-            }
-            i++;
-        }
-        myfile.close();
-        return true;
-    }
-    return defaultCar();
-    
-}
-
-void Car::UpdatePlayerSpeedo(Overlay &TextOverlay)
+void Car::UpdateSpeedo(Overlay &TextOverlay)
 {
     if((speed/maxSpeed) > 0.75)
     {
@@ -122,45 +59,8 @@ void Car::UpdatePlayerSpeedo(Overlay &TextOverlay)
     TextOverlay.SetDataOutput("Sector1", "Sector 1: " + GetSector(1));
     TextOverlay.SetDataOutput("Sector2", "Sector 2: " + GetSector(2));
     TextOverlay.SetDataOutput("Sector3", "Sector 3: " + GetSector(3));
-}
-
-std::string Car::GetSector(int x)
-{
-    switch (x)
-    {
-        case (1):
-            if(CurrentSectors[0] < 80)
-            {
-                return std::to_string(CurrentSectors[0]);
-            }
-            else
-            {
-                return "_.______";
-            }
-            break;
-        case (2):
-            if(CurrentSectors[1] < 80)
-            {
-                return std::to_string(CurrentSectors[1]);
-            }
-            else
-            {
-                return "_.______";
-            }
-            break;
-        case (3):
-            if(CurrentSectors[2] < 80)
-            {
-                return std::to_string(CurrentSectors[2]);
-            }
-            else
-            {
-                return "_.______";
-            }
-            break;
-        default:
-            return "OOPS theres only sectors 1(0), 2(1) and 3(2)";
-    }
+    TextOverlay.SetDataOutput("CurrentLap", "Laptime: " + Helper::floatTo3dpString(Helper::AddUpVecFloat(CurrentSectors),3));
+    TextOverlay.SetDataOutput("BestLap", "Best Laptime: " + Helper::floatTo3dpString(laptime[laptime.size()-1],3));
 }
 
 void Car::UpdateLaptime(sf::Time& elapsedTime)
@@ -337,84 +237,69 @@ void Car::Timing(sf::Clock &clock)
         }
     }
 }
-void Car::AIMovement()
+void Car::CarControls()
 {
-
-        D = false;B = false;L = false;R = false;
-        eyes.Update();
-        if(!ConstantData.usePlayer)
+    D = false;B = false;L = false;R = false;
+    if(!ConstantData.usePlayer)
+    {
+        LM = std::llround(eyes.GetDistance(eSLine::eLeft, eSLine::eMiddle)*2) / 2.0;
+        MR = std::llround(eyes.GetDistance(eSLine::eMiddle, eSLine::eRight)*2) / 2.0;
+        CM = eyes.GetDistance(eSLine::eCenter, eSLine::eMiddle);
+        
+        D = true;
+        B = false;
+        
+        if( LM<MR )
         {
-            LM = std::llround(eyes.GetDistance(eSLine::eLeft, eSLine::eMiddle)*2) / 2.0;
-            MR = std::llround(eyes.GetDistance(eSLine::eMiddle, eSLine::eRight)*2) / 2.0;
-            CM = eyes.GetDistance(eSLine::eCenter, eSLine::eMiddle);        
-
-            D = true;
-            B = false;
-            
-            if( LM<MR )
-            {
-                L = true;
-            }
-            else if(LM > MR)
-            {
-                R = true;
-            }
-            
-            
-            if(eyes.breakingPointAlpha() >= chromosome.GetGene(0) && speed > chromosome.GetGene(4))
-            {
-                B = true;
-                
-            }
-            if(eyes.GetColour(eSLine::eLeft).r == 255 && eyes.GetColour(eSLine::eLeft).g == 1 && eyes.GetColour(eSLine::eLeft).b >= chromosome.GetGene(1))
-            {
-                R = true;
-                L = false;
-            }
-            else if(eyes.GetColour(eSLine::eRight).r == 255 && eyes.GetColour(eSLine::eRight).g == 1 && eyes.GetColour(eSLine::eRight).b >= chromosome.GetGene(1))
-            {
-                L = true;
-                R = false;
-                
-            }
+            L = true;
         }
-        else
+        else if(LM > MR)
         {
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-            {
-                R=1;
-            }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-            {
-                B=1;
-            }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-            {
-                L=1;
-            }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-            {
-                D=1;
-            }
+            R = true;
         }
-        PlayerMovement(D,R,L,B);
+        
+        
+        if(eyes.breakingPointAlpha() >= chromosome.GetGene(0) && speed > chromosome.GetGene(4))
+        {
+            B = true;
+            
+        }
+        if(eyes.GetColour(eSLine::eLeft).r == 255 && eyes.GetColour(eSLine::eLeft).g == 1 && eyes.GetColour(eSLine::eLeft).b >= chromosome.GetGene(1))
+        {
+            R = true;
+            L = false;
+        }
+        else if(eyes.GetColour(eSLine::eRight).r == 255 && eyes.GetColour(eSLine::eRight).g == 1 && eyes.GetColour(eSLine::eRight).b >= chromosome.GetGene(1))
+        {
+            L = true;
+            R = false;
+            
+        }
+    }
+    else
+    {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+        {
+            R=1;
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+        {
+            B=1;
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+        {
+            L=1;
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+        {
+            D=1;
+        }
+    }
+    MoveCar(D,R,L,B);
     
 }
-void Car::Seek(sf::Vector2f target)
-{
-    sf::Vector2f desired = target - location;
-    sf::normalize(desired);
-    desired = desired * maxspeed;
-    sf::Vector2f steer = desired - velocity;
-    Helper::limit(steer, maxforce);
-    ApplyForce(steer);
-    
-}
-void Car::ApplyForce(sf::Vector2f force)
-{
-    acceleration += force;
-}
-void Car::PlayerMovement(bool Drive,bool Right, bool Left, bool Brake)
+
+void Car::MoveCar(bool Drive,bool Right, bool Left, bool Brake)
 {
     
     float turnSpeed_temp = turnSpeed * (1-(speed/maxSpeed));
@@ -518,6 +403,171 @@ void Car::ResetPosition()
     Posy = oldPos.y;
 }
 
+void Car::Render(sf::RenderWindow &window, std::pair<int,int> offset)
+{
+    carSprite.setPosition(Posx-offset.first,Posy-offset.second);
+    //carSprite.rotate(theta);
+    eyes.SetRotation(carSprite.getRotation());
+    eyes.SetPosition(sf::Vector2f(Posx-offset.first,Posy-offset.second),offset);
+    
+    if(!ACTIVE)
+    {
+        if(carColour.a > 0)
+        {
+            carColour.a--;
+            carSprite.setColor(carColour);
+        }
+    }
+    
+    window.draw(carSprite);
+    
+    if(ACTIVE && ConstantData.ShowEyes)
+        eyes.Render(window);
+    
+}
+void Car::TheGameIsPaused(bool Pause)
+{
+    if(Pause )
+    {
+        carColour.a = 5;
+        carSprite.setColor(carColour);
+    }
+    else if (!Pause)
+    {
+        carColour.a = 255;
+        carSprite.setColor(carColour);
+    }
+    
+}
+void Car::STOP()
+{
+    STOPPED = true;
+}
+void Car::Highlight(bool highlight)
+{
+    if(highlight)
+    {
+        carColour.a = 255;
+        carSprite.setColor(carColour);
+    }
+}
+
+
+float Car::GetMaxSpeed()
+{
+    return maxSpeed;
+}
+float Car::getLapsComplete(bool playing)
+{
+    if(playing && !ACTIVE) //This is to help the sorting algorithm remove
+        return 0.f;
+    
+    return float(CurrentLap+percentageComplete);
+}
+
+float Car::getFitness()
+{
+    auto fitnessTotal = getLapsComplete(false);
+    fitnessTotal *= (301.f - BestLapTime);
+    Fitness = fitnessTotal;
+    return Fitness;
+}
+
+float Car::getFastestLap()
+{
+    return BestLapTime;
+}
+
+bool Car::LoadFromFile()
+{
+    std::string line;
+    
+    std::ifstream myfile(ConstantData.CarFilePath);
+    bool exit = false;
+    int i = 0;
+    if (myfile.is_open())
+    {
+        while ( getline (myfile,line) && !exit)
+        {
+            switch(i)
+            {
+                case(0):
+                    break;
+                case(1):
+                    maxSpeed = std::stof(line);
+                    break;
+                case(2):
+                    acc = std::stof(line) ;
+                    break;
+                case(3):
+                    drag = std::stof(line);
+                    break;
+                case(4):
+                    brakepower = std::stof(line) ;
+                    break;
+                case(5):
+                    turnSpeed = std::stof(line) ;
+                    break;
+                case(6):
+                    offTrackSpeed = std::stof(line);
+                    break;
+                case(7):
+                    break;
+                case(8):
+                    exit = true;
+                    break;
+                default:
+                    break;
+            }
+            i++;
+        }
+        myfile.close();
+        return true;
+    }
+    return defaultCar();
+    
+}
+
+std::string Car::GetSector(int x)
+{
+    switch (x)
+    {
+        case (1):
+            if(CurrentSectors[0] < 80)
+            {
+                return Helper::floatTo3dpString(CurrentSectors[0],3);
+            }
+            else
+            {
+                return "_.______";
+            }
+            break;
+        case (2):
+            if(CurrentSectors[1] < 80)
+            {
+                return Helper::floatTo3dpString(CurrentSectors[1],3);
+            }
+            else
+            {
+                return "_.______";
+            }
+            break;
+        case (3):
+            if(CurrentSectors[2] < 80)
+            {
+                return Helper::floatTo3dpString(CurrentSectors[2],3);
+            }
+            else
+            {
+                return "_.______";
+            }
+            break;
+        default:
+            return "OOPS theres only sectors 1(0), 2(1) and 3(2)";
+    }
+}
+
+
 //This is only used when a file cannot be loaded
 //It should never be used.
 //Probably out of date now
@@ -531,6 +581,14 @@ bool Car::defaultCar()
     turnSpeed=0.095;
     offTrackSpeed = 1.f;
     return true;
+}
+
+bool Car::IsOnTrack()
+{
+    if(ConstantData.Track->getSize().x >= Posx/ConstantData.ScaleX && ConstantData.Track->getSize().y >= Posy/ConstantData.ScaleY && 0 <= Posx && 0 <= Posy)
+        return true;
+    else
+        return false;
 }
 
 int Car::RPixelUnderCar()
@@ -572,282 +630,3 @@ int Car::ALLPixelUnderCar()
     else
         return 0;
 }
-bool Car::IsOnTrack()
-{
-    if(ConstantData.Track->getSize().x >= Posx/ConstantData.ScaleX && ConstantData.Track->getSize().y >= Posy/ConstantData.ScaleY && 0 <= Posx && 0 <= Posy)
-        return true;
-    else
-        return false;
-}
-float Car::getFitness()
-{
-    auto fitnessTotal = getLapsComplete(false);
-    fitnessTotal *= (301.f - BestLapTime);
-    Fitness = fitnessTotal;
-    return Fitness;
-}
-
-float Car::getFastestLap()
-{
-    return BestLapTime;
-}
-
-void Car::Render(sf::RenderWindow &window, std::pair<int,int> offset)
-{    
-    carSprite.setPosition(Posx-offset.first,Posy-offset.second);
-    //carSprite.rotate(theta);
-    eyes.SetRotation(carSprite.getRotation());
-    eyes.SetPosition(sf::Vector2f(Posx-offset.first,Posy-offset.second),offset);
-    
-    if(!ACTIVE)
-    {
-        if(carColour.a > 0)
-        {
-            carColour.a--;
-            carSprite.setColor(carColour);
-        }
-    }
-    
-    window.draw(carSprite);
-    
-    if(ACTIVE && ConstantData.ShowEyes)
-        eyes.Render(window);
-    
-}
-/*
- if(inputTime % 3 == 0)
- {
- D = false;B = false;L = false;R = false;
- 
- 
- 
- if(TargetX != -1 && TargetY != -1)
- {
- if ((Posx-TargetX)*(Posx-TargetX)+(Posy-TargetY)*(Posy-TargetY)<150*150) //100x100 is the area around the point a car must be in to pass the checkpoint.
- {
- nextPoint=(nextPoint+1) % ConstantData.pointvector.size(); //increment next point, then make sure to reset when at the final point
- }
- }
- TargetX = ConstantData.pointvector[nextPoint].first;
- TargetY = ConstantData.pointvector[nextPoint].second;
- float beta = (carSprite.getRotation() * (3.14159/180)) - atan2(TargetX - Posx,-TargetY + Posy);
- D = true;
- B = false;
- if (sin(beta)<0)
- {
- L = false;
- R = true;
- }
- else
- {
- L = true;
- R = false;
- }
- 
- float OldCM = CM;
- 
- eyes.Update();
- LM = std::llround(eyes.GetDistance(eSLine::eLeft, eSLine::eMiddle)*2) / 2.0;
- MR = std::llround(eyes.GetDistance(eSLine::eMiddle, eSLine::eRight)*2) / 2.0;
- CM = eyes.GetDistance(eSLine::eCenter, eSLine::eMiddle);
- 
- std::cout << "\nDistance Left - Center " << LM << "\nDistance Center - Right " << MR << "\nDistance Origin - Middle " << CM << std::endl;
- if(!ConstantData.usePlayer)
- {
- D = true;
- B = false;
- if( LM<MR )
- {
- std::cout<<"LEFT"<<std::endl;
- L = true;
- }
- else if(LM > MR)
- {
- std::cout<<"RIGHT"<<std::endl;
- R = true;
- }
- std::cout<<(std::abs(OldCM - CM) )<<std::endl;
- if(std::abs(OldCM - CM) > 5 && speed > 3)
- {
- B = true;
- //  D = false;
- }
- 
- 
- 
- 
- if(chromosome.GetGene(0) == 0)
- B = true;
- else if(chromosome.GetGene(0) == 1)
- D = true;
- 
- if(chromosome.GetGene(1) == 0)
- L = true;
- else if(chromosome.GetGene(1) == 1)
- R = true;
- 
- }
- else
- {
- if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
- {
- R=1;
- }
- if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
- {
- B=1;
- }
- if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
- {
- L=1;
- }
- if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
- {
- D=1;
- }
- 
- if( LM < MR )
- {
- std::cout<<"LEFT"<<std::endl;
- L = true;
- }
- else if(LM > MR)
- {
- std::cout<<"RIGHT"<<std::endl;
- R = true;
- }
- std::cout<<(std::abs(OldCM - CM) )<<std::endl;
- if(std::abs(OldCM - CM) > 5 && speed > 3)
- {
- B = true;
- //  D = false;
- }
- 
- }
- }
- inputTime++;
- PlayerMovement(D,R,L,B);
- 
- */
-
-/*
- //Use this debug to output colour of pixels under the player car
- //std::cout<<"DEBUG: Pixel under car: " << RPixelUnderCar() <<", " <<  GPixelUnderCar() <<", " << BPixelUnderCar() <<", " << APixelUnderCar() <<std::endl;
- //carArray movement
- 
- float turnSpeed_temp = turnSpeed * (1-(speed/maxSpeed));
- 
- if(speed > 0.5)
- {
- if(Right || Left)
- {
- if(speed > 3)
- speed-=(acc*0.75);
- speed-=0.0001; // some speed is scrubbed off when turning.
- 
- if(Left)
- {
- turnSpeed_temp = -turnSpeed_temp;
- carSprite.rotate(turnSpeed_temp);
- }
- else if(Right)
- {
- carSprite.rotate(turnSpeed_temp);
- }
- }
- if(Brake)
- {
- speed -= drag;
- speed -= brakepower;
- }
- }
- if(Drive)
- {
- if (speed<maxSpeed)
- {
- speed += acc;
- }
- }
- else
- {
- if (speed - drag > 0)
- {
- speed -= drag;
- }
- else if (speed + drag < 0)
- {
- speed += drag ;
- }
- else
- {
- speed = 0;
- }
- }
- if(Brake)
- {
- speed -= drag;
- speed -= brakepower;
- }
- //Slow the car down when it goes off circuit
- 
- if(BPixelUnderCar() == 255 && GPixelUnderCar() == 255 && RPixelUnderCar() == 255)
- {
- if(speed > offTrackSpeed)
- {
- speed -= acc*2;
- }
- }
- 
- if(BPixelUnderCar() == 0 && GPixelUnderCar() == 0 && RPixelUnderCar() == 255)
- {
- speed = 0;
- }
- if(speed < 0)
- {
- speed = 0; //make sure car doesn't go backwards.
- }
- 
- sf::Vector2f oldVec = movementVec;
- 
- sf::Transform t;
- t.rotate(carSprite.getRotation());
- movementVec = t.transformPoint(forwardVec);
- //calc the dot product so any rotation reduces the
- //current speed - gives the impression of wheel spin
- //when accelerating after a tight turn
- speed *=  dot(oldVec, movementVec);
- oldPos = sf::Vector2f(Posx,Posy);
- 
- Posx += movementVec.x * speed;
- Posy += movementVec.y * speed;
- 
- */
-
-
-/*
- 
- if(TargetX != -1 && TargetY != -1)
- {
- if ((Posx-TargetX)*(Posx-TargetX)+(Posy-TargetY)*(Posy-TargetY)<150*150) //100x100 is the area around the point a car must be in to pass the checkpoint.
- {
- nextPoint=(nextPoint+1) % ConstantData.pointvector.size(); //increment next point, then make sure to reset when at the final point
- }
- }
- TargetX = ConstantData.pointvector[nextPoint].first;
- TargetY = ConstantData.pointvector[nextPoint].second;
- 
- float beta = (carSprite.getRotation() * (3.14159/180)) - atan2(TargetX - Posx,-TargetY + Posy);
- D = true;
- B = false;
- if (sin(beta)<0)
- {
- L = false;
- R = true;
- }
- else
- {
- L = true;
- R = false;
- }
- */
-//   float OldCM = CM;

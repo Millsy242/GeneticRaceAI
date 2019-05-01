@@ -1,4 +1,3 @@
-
 #ifndef MENU_H
 #define MENU_H
 #include <SFML/Graphics.hpp>
@@ -18,7 +17,6 @@
 #include "Chromosome.hpp"
 #include "Database.hpp"
 
-
 struct carstats
 {
     float MaxSpeed = 15.0 * 12.f;
@@ -27,7 +25,6 @@ struct carstats
     float BrakePower = 0.08;
     float TurnSpeed = 3.0;
     float OffTrackSpeed = 1.0 * 12.f;
-    
     
     void SaveToFile(std::string filename)
     {
@@ -61,16 +58,16 @@ struct carstats
                         MaxSpeed = std::stof(line) * 12.f;
                         break;
                     case(2):
-                        acceleration = std::stof(line) ;
+                        acceleration = std::stof(line);
                         break;
                     case(3):
                         Drag = std::stof(line);
                         break;
                     case(4):
-                        BrakePower = std::stof(line) ;
+                        BrakePower = std::stof(line);
                         break;
                     case(5):
-                        TurnSpeed = std::stof(line) ;
+                        TurnSpeed = std::stof(line);
                         break;
                     case(6):
                         OffTrackSpeed = std::stof(line) * 12.f;
@@ -81,13 +78,9 @@ struct carstats
                 i++;
             }
             myfile.close();
-
         }
     }
-    
-    
 };
-
 
 class Menu
 {
@@ -101,7 +94,6 @@ class Menu
     Data &ConstantData;
     
     const std::string currentDateTime_();
-    
     void Setup();
     void Loop(); 
     void Input();
@@ -115,43 +107,39 @@ class Menu
     void Load();
     void AlgorithmEditor();
 
+    sf::RenderWindow MenuWindow;
     sf::Texture track;
-    sf::Sprite tracksprite; 
-   
-    carstats CarStats; 
-
-    sf::RenderWindow window;
-
-    Overlay LobbyItems;
-    bool GeneSelector = false;
+    sf::Sprite tracksprite;
     
     sf::Time mStatisticsUpdateTime;
     sf::Time elapsedTime;
-    std::size_t mStatisticsNumFrames;
     sf::Clock clock;
     sf::Time TotalTime;
     sf::Time timeSinceLastUpdate;
     const sf::Time TimePerFrame = sf::seconds(1.f/60.f);
+    
+    carstats CarStats; 
 
+    Overlay MenuOverlay;
+    
+    bool GeneSelector = false;
     bool user = false;
     bool Records = false;
-    int selectedgenesplace = 0; 
-
+    bool Loaded = false;
+   
     std::vector<GeneTableStruct> genereturns;
     std::vector<LapTimeTableStruct> Lapreturns;
     std::vector<std::string> listbox_items;
-    std::vector<std::string> SelectedItems; 
-    bool Loaded = false;
+    std::vector<std::string> SelectedItems;
+    
+    std::size_t mStatisticsNumFrames;
+    
+    std::pair<int,int> BreedingPair = {-1,-1};
+
     int sizeGene = -1;
     int sizeLap = -1;
-
     int GeneListPlace = 0;
     int RecordListPlace = 0;
-    
-    std::pair<int,int> Breedingspot = {-1,-1}; 
-    
-    
-
+    int selectedgenesplace = 0;
 };
-
 #endif // MENU_H

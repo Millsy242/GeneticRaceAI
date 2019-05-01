@@ -1,22 +1,16 @@
 //
 //  Database.cpp
-//  t02
 //
 //  Created by Daniel Harvey on 08/04/2019.
-//  Copyright © 2019 Cordry, Julien. All rights reserved.
 //
 
 #include "Database.hpp"
-
-
-
 //Created with help from
 //https://www.geeksforgeeks.org/sql-using-c-c-and-sqlite/
 Database::Database()
 {
-    
 }
-//SQDatabase.db
+
 bool Database::Open(const char *path)
 {
     if(!Helper::is_file_exist(path))
@@ -35,32 +29,31 @@ bool Database::Open(const char *path)
             return false;
         }
     }
-        std::cout << "Opened Database Successfully!" << std::endl;
-        return true;
+    return true;
 }
 bool Database::Create(const char *path)
 {
     std::cout<<"CREATE"<<std::endl;
     Lastpath = path;
     std::string table_1 = "CREATE TABLE Gene ("
-                                                "ID    INTEGER NOT NULL,"
-                                               "Name    TEXT NOT NULL DEFAULT 'Name_NotGiven', "
-                                               "DateTime    TEXT NOT NULL DEFAULT 'YYYY-MM-DD HH:MM:SS.SSS' UNIQUE, "
-                                               "TrackNumber    INTEGER NOT NULL, "
-                                               "FastestLapTime    NUMERIC, "
-                                               "Genes    TEXT NOT NULL, "
-                                               "Generation    INTEGER NOT NULL DEFAULT 1, "
-                                                "PRIMARY KEY(ID) ); ";
+    "ID    INTEGER NOT NULL,"
+    "Name    TEXT NOT NULL DEFAULT 'Name_NotGiven', "
+    "DateTime    TEXT NOT NULL DEFAULT 'YYYY-MM-DD HH:MM:SS.SSS' UNIQUE, "
+    "TrackNumber    INTEGER NOT NULL, "
+    "FastestLapTime    NUMERIC, "
+    "Genes    TEXT NOT NULL, "
+    "Generation    INTEGER NOT NULL DEFAULT 1, "
+    "PRIMARY KEY(ID) ); ";
     CreateTable(path, table_1);
     std::string table_2 = "CREATE TABLE LapTimeRecords ( "
-                                   "TrackID    INTEGER NOT NULL DEFAULT 1 UNIQUE, "
-                                   "DateTime    TEXT NOT NULL DEFAULT 'YYYY-MM-DD HH:MM:SS.SSS', "
-                                   "Laptime    NUMERIC NOT NULL, "
-                                   "Name    TEXT NOT NULL DEFAULT 'Name_NotGiven', "
-                                   "Gene    TEXT NOT NULL, "
-                                    "PRIMARY KEY(TrackID)); ";
+    "TrackID    INTEGER NOT NULL DEFAULT 1 UNIQUE, "
+    "DateTime    TEXT NOT NULL DEFAULT 'YYYY-MM-DD HH:MM:SS.SSS', "
+    "Laptime    NUMERIC NOT NULL, "
+    "Name    TEXT NOT NULL DEFAULT 'Name_NotGiven', "
+    "Gene    TEXT NOT NULL, "
+    "PRIMARY KEY(TrackID)); ";
     
-
+    
     CreateTable(path, table_2);
     
     return true;
@@ -78,18 +71,13 @@ bool Database::CreateTable(const char *path, std::string sql)
         return false; 
     }
     
-     Close();
+    Close();
     return true;
 }
 bool Database::Close()
 {
     sqlite3_close(DB);
     return true;
-}
-
-void Database::Error()
-{
-    std::cerr << "Error in Database: " << sqlite3_errmsg(DB) << std::endl;
 }
 bool Database::Select(std::string query, GeneTableStruct &gts)
 {
@@ -116,7 +104,7 @@ bool Database::Select(std::string query, GeneTableStruct &gts)
     if (rc != SQLITE_DONE)
     {
         Error();
-         Close();
+        Close();
         return false;
     }
     sqlite3_finalize(stmt);
@@ -132,7 +120,7 @@ bool Database::Select(std::string query, LapTimeTableStruct &lts)
     if (rc != SQLITE_OK)
     {
         Error();
-         Close();
+        Close();
         return false ;
     }
     while ((rc = sqlite3_step(stmt)) == SQLITE_ROW)
@@ -146,13 +134,49 @@ bool Database::Select(std::string query, LapTimeTableStruct &lts)
     if (rc != SQLITE_DONE)
     {
         Error();
-         Close();
+        Close();
         return false;
     }
     sqlite3_finalize(stmt);
-     Close();
+    Close();
     return true;
 }
+bool Database::Insert(std::string sql)
+{
+    Open(Lastpath);
+    char* messaggeError;
+    bool exit = Open(Lastpath);
+    exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &messaggeError);
+    
+    if (exit != SQLITE_OK)
+    {
+        Error();
+        sqlite3_free(messaggeError);
+        Close();
+        return false;
+    }
+    
+    Close();
+    return true;
+}
+bool Database::Delete(std::string sql)
+{
+    Open(Lastpath);
+    char* messaggeError;
+    bool exit = Open(Lastpath);
+    exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &messaggeError);
+    
+    if (exit != SQLITE_OK)
+    {
+        Error();
+        sqlite3_free(messaggeError);
+        return false;
+    }
+    
+    Close();
+    return true;
+}
+
 int Database::getSize(eTable table)
 {
     Open(Lastpath);
@@ -163,12 +187,12 @@ int Database::getSize(eTable table)
         query = "SELECT * FROM Gene ORDER BY ID DESC LIMIT 1";
     else
         query = "SELECT Count(*) FROM LapTimeRecords";
-
+    
     int rc = sqlite3_prepare_v2(DB, query.c_str(), -1, &stmt, NULL);
     if (rc != SQLITE_OK)
     {
         Error();
-         Close();
+        Close();
         return 0;
     }
     while ((rc = sqlite3_step(stmt)) == SQLITE_ROW)
@@ -178,57 +202,15 @@ int Database::getSize(eTable table)
     if (rc != SQLITE_DONE)
     {
         Error();
-         Close();
+        Close();
         return -1;
     }
     sqlite3_finalize(stmt);
-     Close();
+    Close();
     return size;
 }
 
-bool Database::Insert(std::string sql)
+void Database::Error()
 {
-    Open(Lastpath);
-    char* messaggeError;
-    bool exit = Open(Lastpath);
-    exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &messaggeError);
-    if (exit != SQLITE_OK)
-    {
-        Error();
-        sqlite3_free(messaggeError);
-         Close();
-        return false;
-    }
-    else
-        std::cout << "Records created Successfully!" << std::endl;
-    
-     Close();
-    
-    return true;
-   
-    
-   
+    std::cerr << "Potential Error in Database: " << sqlite3_errmsg(DB) << std::endl;
 }
-bool Database::Delete(std::string sql)
-{
-    Open(Lastpath);
-    char* messaggeError;
-    bool exit = Open(Lastpath);
-
-    exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &messaggeError);
-    if (exit != SQLITE_OK)
-    {
-        Error();
-        sqlite3_free(messaggeError);
-        return false;
-    }
-    else
-        std::cout << "Record deleted Successfully!" << std::endl;
-    
-    
-    Close();
-    return true;
-    
-}
-
-

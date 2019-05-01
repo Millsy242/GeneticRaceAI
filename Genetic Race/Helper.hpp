@@ -9,23 +9,16 @@
 #ifndef Helper_hpp
 #define Helper_hpp
 
-#include "Car.h"
 #include <vector>
 #include <sstream>
-#include <iostream>
+#include <fstream>
 #include <iomanip>
-#include <cmath>
-#include <limits>
-#include <utility>
 #include <SFML/Graphics.hpp>
 #include "SFMLVectorMaths.hpp"
 
-
-
-
 namespace Helper
 {
-     inline void BubbleSort(std::vector<float> &vect)
+    inline void BubbleSort(std::vector<float> &vect)
     {
         unsigned int count{0};
         while(count != vect.size())
@@ -54,7 +47,7 @@ namespace Helper
         return std::all_of(str.begin(), str.end(), ::isdigit); // C++11
     }
     
-   inline std::string floatTo3dpString(float f, int precision)
+    inline std::string floatTo3dpString(float f, int precision)
     {
         std::stringstream ss;
         ss << std::fixed << std::setprecision(precision) << f;
@@ -80,12 +73,13 @@ namespace Helper
         return offset;
     }
     
-    inline int random(int min, int max) //https://stackoverflow.com/a/7560171/9178399
+    //https://stackoverflow.com/a/7560171/9178399
+    inline int random(int min, int max)
     {
         return min + rand() % (( max + 1 ) - min);
     }
-    
-    inline bool is_file_exist(const std::string fileName) //https://stackoverflow.com/questions/12774207/fastest-way-to-check-if-a-file-exist-using-standard-c-c11-c
+    //https://stackoverflow.com/questions/12774207/fastest-way-to-check-if-a-file-exist-using-standard-c-c11-c
+    inline bool is_file_exist(const std::string fileName)
     {
         std::ifstream infile(fileName);
         return infile.good();
@@ -106,7 +100,7 @@ namespace Helper
         {
             total+=Fvec[i];
         }
-
+        
         return total; 
     }
     
@@ -133,11 +127,5 @@ namespace Helper
         strftime(buf, sizeof(buf), "%Y-%m-%d.%X", &tstruct); //Date and time
         return buf;
     }
-
-    
-    
 }
-
-
 #endif /* Helper_hpp */
-

@@ -19,11 +19,9 @@
 		0B1431EA2267EF25000FEEF7 /* imgui-SFML.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B1431E22267EF25000FEEF7 /* imgui-SFML.cpp */; };
 		0B1431EB2267EF25000FEEF7 /* imgui_demo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B1431E62267EF25000FEEF7 /* imgui_demo.cpp */; };
 		0B1431EC2267EF25000FEEF7 /* imgui_draw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B1431E72267EF25000FEEF7 /* imgui_draw.cpp */; };
-		0B1432112267EF36000FEEF7 /* trackpoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B1431F32267EF35000FEEF7 /* trackpoints.cpp */; };
 		0B1432122267EF36000FEEF7 /* Car.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B1431F42267EF35000FEEF7 /* Car.cpp */; };
 		0B1432132267EF36000FEEF7 /* SightLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B1431F52267EF35000FEEF7 /* SightLine.cpp */; };
 		0B1432142267EF36000FEEF7 /* Database.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B1431F62267EF35000FEEF7 /* Database.cpp */; };
-		0B1432152267EF36000FEEF7 /* Collision.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B1431F92267EF35000FEEF7 /* Collision.cpp */; };
 		0B1432162267EF36000FEEF7 /* game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B1431FA2267EF35000FEEF7 /* game.cpp */; };
 		0B1432172267EF36000FEEF7 /* Vision.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B1431FB2267EF35000FEEF7 /* Vision.cpp */; };
 		0B1432182267EF36000FEEF7 /* overlay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B1431FF2267EF36000FEEF7 /* overlay.cpp */; };
@@ -67,21 +65,17 @@
 		0B1431E52267EF25000FEEF7 /* imstb_rectpack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imstb_rectpack.h; sourceTree = "<group>"; };
 		0B1431E62267EF25000FEEF7 /* imgui_demo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = imgui_demo.cpp; sourceTree = "<group>"; };
 		0B1431E72267EF25000FEEF7 /* imgui_draw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = imgui_draw.cpp; sourceTree = "<group>"; };
-		0B1431EE2267EF35000FEEF7 /* Collision.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Collision.hpp; sourceTree = "<group>"; };
 		0B1431EF2267EF35000FEEF7 /* Vision.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Vision.hpp; sourceTree = "<group>"; };
 		0B1431F02267EF35000FEEF7 /* SightLine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SightLine.hpp; sourceTree = "<group>"; };
 		0B1431F12267EF35000FEEF7 /* Database.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Database.hpp; sourceTree = "<group>"; };
 		0B1431F22267EF35000FEEF7 /* Car.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Car.h; sourceTree = "<group>"; };
-		0B1431F32267EF35000FEEF7 /* trackpoints.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = trackpoints.cpp; sourceTree = "<group>"; };
 		0B1431F42267EF35000FEEF7 /* Car.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Car.cpp; sourceTree = "<group>"; };
 		0B1431F52267EF35000FEEF7 /* SightLine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SightLine.cpp; sourceTree = "<group>"; };
 		0B1431F62267EF35000FEEF7 /* Database.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Database.cpp; sourceTree = "<group>"; };
 		0B1431F72267EF35000FEEF7 /* game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = game.h; sourceTree = "<group>"; };
 		0B1431F82267EF35000FEEF7 /* DataStruct.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DataStruct.hpp; sourceTree = "<group>"; };
-		0B1431F92267EF35000FEEF7 /* Collision.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Collision.cpp; sourceTree = "<group>"; };
 		0B1431FA2267EF35000FEEF7 /* game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = game.cpp; sourceTree = "<group>"; };
 		0B1431FB2267EF35000FEEF7 /* Vision.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vision.cpp; sourceTree = "<group>"; };
-		0B1431FC2267EF35000FEEF7 /* trackpoints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = trackpoints.h; sourceTree = "<group>"; };
 		0B1431FD2267EF35000FEEF7 /* Helper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Helper.hpp; sourceTree = "<group>"; };
 		0B1431FF2267EF36000FEEF7 /* overlay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = overlay.cpp; sourceTree = "<group>"; };
 		0B1432002267EF36000FEEF7 /* overlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = overlay.h; sourceTree = "<group>"; };
@@ -184,21 +178,17 @@
 		0B1431ED2267EF35000FEEF7 /* Game */ = {
 			isa = PBXGroup;
 			children = (
-				0B1431EE2267EF35000FEEF7 /* Collision.hpp */,
-				0B1431EF2267EF35000FEEF7 /* Vision.hpp */,
 				0B1431F02267EF35000FEEF7 /* SightLine.hpp */,
+				0B1431F52267EF35000FEEF7 /* SightLine.cpp */,
 				0B1431F12267EF35000FEEF7 /* Database.hpp */,
 				0B1431F62267EF35000FEEF7 /* Database.cpp */,
-				0B1431F32267EF35000FEEF7 /* trackpoints.cpp */,
 				0B1431F22267EF35000FEEF7 /* Car.h */,
 				0B1431F42267EF35000FEEF7 /* Car.cpp */,
-				0B1431F52267EF35000FEEF7 /* SightLine.cpp */,
-				0B1431F72267EF35000FEEF7 /* game.h */,
 				0B1431F82267EF35000FEEF7 /* DataStruct.hpp */,
-				0B1431F92267EF35000FEEF7 /* Collision.cpp */,
+				0B1431F72267EF35000FEEF7 /* game.h */,
 				0B1431FA2267EF35000FEEF7 /* game.cpp */,
+				0B1431EF2267EF35000FEEF7 /* Vision.hpp */,
 				0B1431FB2267EF35000FEEF7 /* Vision.cpp */,
-				0B1431FC2267EF35000FEEF7 /* trackpoints.h */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -206,8 +196,8 @@
 		0B1431FE2267EF36000FEEF7 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				0B1431FF2267EF36000FEEF7 /* overlay.cpp */,
 				0B1432002267EF36000FEEF7 /* overlay.h */,
+				0B1431FF2267EF36000FEEF7 /* overlay.cpp */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -233,8 +223,8 @@
 		0B1432092267EF36000FEEF7 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
-				0B14320A2267EF36000FEEF7 /* menu.cpp */,
 				0B14320B2267EF36000FEEF7 /* menu.h */,
+				0B14320A2267EF36000FEEF7 /* menu.cpp */,
 			);
 			path = Menu;
 			sourceTree = "<group>";
@@ -242,10 +232,10 @@
 		0B14320C2267EF36000FEEF7 /* Genetic Algorithm */ = {
 			isa = PBXGroup;
 			children = (
+				0B1432102267EF36000FEEF7 /* PopulationManager.hpp */,
 				0B14320D2267EF36000FEEF7 /* PopulationManager.cpp */,
 				0B14320E2267EF36000FEEF7 /* Chromosome.hpp */,
 				0B14320F2267EF36000FEEF7 /* Chromosome.cpp */,
-				0B1432102267EF36000FEEF7 /* PopulationManager.hpp */,
 			);
 			path = "Genetic Algorithm";
 			sourceTree = "<group>";
@@ -306,7 +296,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0B1432152267EF36000FEEF7 /* Collision.cpp in Sources */,
 				0B14321C2267EF36000FEEF7 /* osdialog.c in Sources */,
 				0B1431C02267E85E000FEEF7 /* main.cpp in Sources */,
 				0B1432172267EF36000FEEF7 /* Vision.cpp in Sources */,
@@ -319,7 +308,6 @@
 				0B14321B2267EF36000FEEF7 /* osdialog_mac.m in Sources */,
 				0B1431EB2267EF25000FEEF7 /* imgui_demo.cpp in Sources */,
 				0B1432182267EF36000FEEF7 /* overlay.cpp in Sources */,
-				0B1432112267EF36000FEEF7 /* trackpoints.cpp in Sources */,
 				0B14321D2267EF36000FEEF7 /* menu.cpp in Sources */,
 				0B1432122267EF36000FEEF7 /* Car.cpp in Sources */,
 				0B1432142267EF36000FEEF7 /* Database.cpp in Sources */,

@@ -34,7 +34,7 @@ void PopulationManager::CreateStartingPopulation()
         Car newCar(ConstantData);
         newCar.setPosX(ConstantData.StartPos.x);
         newCar.setPosY(ConstantData.StartPos.y);
-        newCar.id = std::to_string(totalnumberofcars);
+        newCar.id = "G" + std::to_string(Generation) + "C" + std::to_string(i);
         newCar.LoadFromFile();
         SetupChromosome(newCar.chromosome,newCar.GetMaxSpeed());
         if(i<ConstantData.Chromosomes.size())
@@ -44,7 +44,6 @@ void PopulationManager::CreateStartingPopulation()
         }
         newCar.Init();
         carArray.push_back(newCar);
-        totalnumberofcars++;
     }
     nameofoutput = Helper::GetDateTime();
 }
@@ -53,7 +52,7 @@ void PopulationManager::SetupChromosome(Chromosome &ch, float maxspeed)
     ch.AddGene(2,255,0);
     ch.AddGene(1,1,0);
     ch.AddGene(1,200,1);
-    ch.AddGene(1,maxspeed,0.5);
+    ch.AddGene(1,maxspeed,1);
 
     ch.EndAddingGenes();
 }
@@ -61,11 +60,15 @@ void PopulationManager::WriteToCSV()
 {
     std::ofstream output("GenesOutput/"+nameofoutput+".csv", std::ios::app);
     
+    output << "Generation : ," << Generation << "\nPopulation Size: ," << ConstantData.PopSize << "\nMutation Rate:," << ConstantData.MutationRate << "\nFastest Lap:,"<<FastestLap<<"\nAverage Fastest Lap:," << AverageLapTimes[AverageLapTimes.size()]<<"\nTotal Fitness:,"<< totalFitness<<"\n";
+    
+    output << "Braking Point, Turning Point, Longer Middle, Feeler Length, Minimum Speed, Red, Green, Blue, Fastest Lap\n";
+    
     for(int i{0}; i<carArray.size();i++)
     {
-        output << carArray[i].chromosome.ToString() + ", " + std::to_string(carArray[i].getFastestLap())+ "\n";
+        output << carArray[i].chromosome.ToString() << carArray[i].getFastestLap() << "\n";
     }
-    output << "\n\n\n";
+    output << "\n\n";
     output.close();
 }
 void PopulationManager::StartRace()
@@ -76,72 +79,11 @@ void PopulationManager::StopRace()
 {
     Racing = false;
 }
-bool PopulationManager::isRacing()
-{
-    return Racing;
-}
-float PopulationManager::getFastestLap()
-{
-    return FastestLap;
-}
-unsigned long PopulationManager::SizeOfCarArray()
-{
-    return carArray.size();
-}
-Car& PopulationManager::GetCar(int id)
-{
-    if(carArray.size() > id)
-    {
-        return carArray[id];
-    }
-    std::cerr<<"looking for id that doesnt exist, returning first car"<<std::endl;
-    return carArray[0];
-}
-Car PopulationManager::CreateCar()
-{
-    Car newCar(ConstantData);
-    newCar.setPosX(ConstantData.StartPos.x);
-    newCar.setPosY(ConstantData.StartPos.y);
-    newCar.id = std::to_string(totalnumberofcars);
-    newCar.LoadFromFile();
-    totalnumberofcars++;
-    SetupChromosome(newCar.chromosome,newCar.GetMaxSpeed());
-    
-    return newCar;
-}
-Car PopulationManager::Breed(Car M, Car D)
-{
-    auto newCar = CreateCar();
-    
-    if(Helper::random(0, 100) < CrossoverRate)
-    {
-        newCar.chromosome.Crossover(M.chromosome, D.chromosome);
-    }
-    else
-    {
-        if(Helper::random(0, 100) > 50)
-        {
-            newCar.chromosome = M.chromosome;
-        }
-        else
-        {
-            newCar.chromosome = D.chromosome;
-        }
-    }
-    if(Helper::random(0, 100) == 1)
-    {
-        newCar.chromosome.Mutate(ConstantData.MutationRate);
-    }
-    newCar.Init();
-    
-    return newCar;
-}
+
 void PopulationManager::BreedNewPopulation()
 {
-
     numDead = 0;
     NumFinished = 0;
-    WriteToCSV();
     totalFitness = 0;
     float bestFitness = 0;
     //We can just use the first cars fitness as the temp worst fitness
@@ -187,7 +129,7 @@ void PopulationManager::BreedNewPopulation()
     {
         ConstantData.FastestLapTimeData->LapTime = bestLap;
         
-        std::string sql = "INSERT INTO LapTimeRecords (TrackID,DateTime,LapTime,Name,Gene) VALUES('" + std::to_string(ConstantData.TrackNumber) + "', '" + Helper::GetDateTime() + "','" + std::to_string(bestLap) + "','Player" + carArray[orderedcarindex[carArray.size()-1]].id + "', '" + carArray[orderedcarindex[carArray.size()-1]].chromosome.ToString()+"');";
+        std::string sql = "INSERT INTO LapTimeRecords (TrackID,DateTime,LapTime,Name,Gene) VALUES('" + std::to_string(ConstantData.TrackNumber) + "', '" + Helper::GetDateTime() + "','" + std::to_string(bestLap) + "','Player" + carArray[orderedcarindex[0]].id + "', '" + carArray[orderedcarindex[0]].chromosome.ToString()+"');";
         
         if(!ConstantData.database->Insert(sql))
         {
@@ -196,20 +138,41 @@ void PopulationManager::BreedNewPopulation()
         }
     }
     totalFitness -= (carArray.size() * worstFitness);
+    WriteToCSV();
     sortCars();
     std::vector<Car> tempCarArray = carArray;
     carArray.clear();
+    Generation++;
+    bool UserHasForcedChromosomes = !ForceAddedChromosomes.empty();
     
     for (unsigned int i = 0; i < orderedcarindex.size(); i++)
     {
         //We should leave the elites in the population https://stackoverflow.com/questions/14622342/elitism-in-ga-should-i-let-the-elites-be-selected-as-parents
-        if(ConstantData.Elitism && i < ConstantData.ElitismNum )
+        if((ConstantData.Elitism && i < ConstantData.ElitismNum) || UserHasForcedChromosomes)
         {
-            auto newcar = CreateCar();
-            newcar.chromosome = tempCarArray[orderedcarindex[ i]].chromosome;
+            auto newcar = CreateCar(i);
+            if(ForceAddedChromosomes.size() > i) //Prefer Users chosen agents
+            {
+                newcar.chromosome = ForceAddedChromosomes[i].second;
+                newcar.id = ForceAddedChromosomes[i].first;
+            }
+            else
+            {
+                if(UserHasForcedChromosomes)
+                {
+                    newcar.chromosome = tempCarArray[orderedcarindex[i - ForceAddedChromosomes.size()]].chromosome;
+                    newcar.id = tempCarArray[orderedcarindex[i - ForceAddedChromosomes.size()]].id;
+                }
+                else
+                {
+                    newcar.chromosome = tempCarArray[orderedcarindex[i]].chromosome;
+                    newcar.id = tempCarArray[orderedcarindex[i]].id;
+                }
+            }
+            
             newcar.Init();
-            newcar.id = tempCarArray[orderedcarindex[ i]].id;
-            if(ConstantData.MutateElites)
+            
+            if(ConstantData.MutateElites && ConstantData.Elitism)
             {
                 newcar.chromosome.Mutate(ConstantData.MutationRate);
             }
@@ -223,69 +186,9 @@ void PopulationManager::BreedNewPopulation()
         }
     }
     tempCarArray.clear();
+    ForceAddedChromosomes.clear();
     orderedcarindex.clear();
-    Generation++;
-}
-
-int PopulationManager::RouletteWheelSelection(std::vector<int> Orderedcarindex, std::vector<Car> &tempCarArray)
-{
-    float chosen = Helper::random(0, totalFitness);
-    float partialSum = 0;
     
-    for (int i = 0; i < Orderedcarindex.size(); i++)
-    {
-        if(partialSum + (tempCarArray[Orderedcarindex[i]].getFitness() - worstFitness) < chosen)
-        {
-            partialSum+=(tempCarArray[Orderedcarindex[i]].getFitness() - worstFitness);
-        }
-        else
-            return Orderedcarindex[i];
-        
-    }
-    std::cout<<"ERROR in RouletteWheelSelection"<<std::endl;
-    return 0;
-}
-void PopulationManager::UpdateCars()
-{
-    if(Racing)
-    {
-        numDead = 0;
-        for(int i{0}; i<carArray.size(); i++)
-        {
-            if(!carArray[i].STOPPED)
-            {
-                if(ConstantData.StopOnLaps && (ConstantData.laps < carArray[i].getLapsComplete(true)))
-                {
-                    NumFinished++;
-                    GetCar(i).STOP();
-                }
-                
-                
-                carArray[i].Timing(ConstantData.clock);
-                carArray[i].UpdateLaptime(ConstantData.elapsedTime);
-                
-                carArray[i].AIMovement();
-                if(!carArray[i].GetActive())
-                {
-                    numDead++;
-                }
-            }
-        }
-        if(numDead == numCars() ||  (numDead + NumFinished >= numCars()))
-        {
-            BreedNewPopulation();
-        }
-    }
-    sortCars();
-    if(!carArray[CameraID].GetActive())
-    {
-        CameraID = orderedcarindex[0];
-    }
-}
-
-unsigned int PopulationManager::numCars()
-{
-    return (unsigned int)carArray.size();
 }
 
 void PopulationManager::RenderCars(sf::RenderWindow &window)
@@ -328,6 +231,7 @@ void PopulationManager::sortCars(bool Fitness)
         }
         count++;
     }
+    
 }
 void PopulationManager::UpdateGUI(bool Pause)
 {
@@ -341,43 +245,41 @@ void PopulationManager::UpdateGUI(bool Pause)
         }
         carArray[CameraID].Highlight(true);
         
-        if(Pause)
+        std::string defaultname = "Player" + carArray[CameraID].id;
+        char hint[defaultname.length() + 1];
+        strcpy(hint, defaultname.c_str());
+        
+        ImGui::InputTextWithHint("Input a Savename", hint, stringinput, IM_ARRAYSIZE(stringinput));
+        if(ImGui::Button("Save Selected Car"))
         {
-            // assigning value to string s
-            std::string defaultname = "Player" + carArray[CameraID].id;
+            std::string sql = "INSERT INTO GENE (Name,DateTime,TrackNumber,FastestLapTime,Genes,Generation) VALUES('"+ std::string(stringinput) + "', '" + Helper::GetDateTime() + "',  '" + std::to_string(ConstantData.TrackNumber) + "',   '" + std::to_string(carArray[CameraID].getFastestLap()) +   "',    '" + carArray[CameraID].chromosome.ToString()+"',     '" + std::to_string(Generation) +"');";
             
-            // declaring character array
-            char hint[defaultname.length() + 1];
-            
-            // copying the contents of the
-            // string to char array
-            strcpy(hint, defaultname.c_str());
-            
-            
-            ImGui::InputTextWithHint("Input a Savename", hint, stringinput, IM_ARRAYSIZE(stringinput));
-            if(ImGui::Button("Save Selected Car"))
-            {
-                std::string sql = "INSERT INTO GENE (Name,DateTime,TrackNumber,FastestLapTime,Genes,Generation) VALUES('"+ std::string(stringinput) + "', '" + Helper::GetDateTime() + "',  '" + std::to_string(ConstantData.TrackNumber) + "',   '" + std::to_string(carArray[CameraID].getFastestLap()) +   "',    '" + carArray[CameraID].chromosome.ToString()+"',     '" + std::to_string(Generation) +"');";
-                
-                ConstantData.database->Insert(sql);
-            }
+            ConstantData.database->Insert(sql);
         }
-        
-        
+        if(ImGui::Button("Force Add Selected Car to Next Generation"))
+        {
+            std::pair<std::string,Chromosome> addthis{std::string(stringinput),carArray[CameraID].chromosome};
+            ForceAddedChromosomes.push_back(addthis);
+        }
     }
     else
     {
         ImGui::Text("Pause to save any car here!");
-        
-        
+        CameraID = orderedcarindex[0];
     }
+    std::string genetext = "Genes for car: " + carArray[CameraID].id +
+    "\nBraking Point = " + std::to_string(carArray[CameraID].chromosome.GetGene(0)) +
+    "\nTurning Point = " + std::to_string(carArray[CameraID].chromosome.GetGene(1)) +
+    "\nLonger Middle Feeler = " + std::to_string(carArray[CameraID].chromosome.GetGene(2)) +
+    "\nFeeler Length = " + std::to_string(carArray[CameraID].chromosome.GetGene(3)) +
+    "\nMinimum Speed = " + std::to_string(carArray[CameraID].chromosome.GetGene(4));
+    ImGui::Text("%s", genetext.c_str());
     ImGui::End();
 }
 void PopulationManager::UpdateStandings()
 {
     sortCars(false);
     std::vector<std::string> Standings;
-    
     
     for(unsigned int i{0}; i<ConstantData.PopSize; i++)
     {
@@ -387,7 +289,7 @@ void PopulationManager::UpdateStandings()
             if(GetCar(orderedcarindex[i]).STOPPED)
             {
                 entry += " FIN";
-            }           
+            }
             
             Standings.push_back(entry);
         }
@@ -401,8 +303,125 @@ void PopulationManager::UpdateStandings()
     {
         CameraID = orderedcarindex[selectedCar];
     }
-    
-    
-    
-    
 }
+void PopulationManager::UpdateCars()
+{
+    if(Racing)
+    {
+        numDead = 0;
+        for(int i{0}; i<carArray.size(); i++)
+        {
+            if(!carArray[i].STOPPED)
+            {
+                if(ConstantData.StopOnLaps && (ConstantData.laps < carArray[i].getLapsComplete(true)))
+                {
+                    NumFinished++;
+                    GetCar(i).STOP();
+                }
+                
+                carArray[i].Timing(ConstantData.clock);
+                carArray[i].UpdateLaptime(ConstantData.elapsedTime);
+                
+                carArray[i].CarControls();
+                if(!carArray[i].GetActive())
+                {
+                    numDead++;
+                }
+            }
+        }
+        if(numDead == numCars() ||  (numDead + NumFinished >= numCars()))
+        {
+            BreedNewPopulation();
+        }
+    }
+    sortCars();
+}
+
+bool PopulationManager::isRacing()
+{
+    return Racing;
+}
+float PopulationManager::getFastestLap()
+{
+    return FastestLap;
+}
+unsigned long PopulationManager::SizeOfCarArray()
+{
+    return carArray.size();
+}
+Car& PopulationManager::GetCar(int id)
+{
+    if(carArray.size() > id)
+    {
+        return carArray[id];
+    }
+    std::cerr<<"looking for id that doesnt exist, returning first car"<<std::endl;
+    return carArray[0];
+}
+Car PopulationManager::CreateCar(int carnum)
+{
+    Car newCar(ConstantData);
+    newCar.setPosX(ConstantData.StartPos.x);
+    newCar.setPosY(ConstantData.StartPos.y);
+    newCar.id = newCar.id = "G" + std::to_string(Generation) + "C" + std::to_string(carnum);;
+    newCar.LoadFromFile();
+    SetupChromosome(newCar.chromosome,newCar.GetMaxSpeed());
+    
+    return newCar;
+}
+Car PopulationManager::Breed(Car M, Car D)
+{
+    auto newCar = CreateCar((int)carArray.size());
+    
+    if(Helper::random(0, 100) < CrossoverRate)
+    {
+        newCar.chromosome.Crossover(M.chromosome, D.chromosome);
+    }
+    else
+    {
+        if(Helper::random(0, 100) > 50)
+        {
+            newCar.chromosome = M.chromosome;
+        }
+        else
+        {
+            newCar.chromosome = D.chromosome;
+        }
+    }
+    if(Helper::random(0, 100) == ConstantData.MutationRate)
+    {
+        newCar.chromosome.Mutate(ConstantData.MutationRate);
+    }
+    newCar.Init();
+    
+    return newCar;
+}
+
+int PopulationManager::RouletteWheelSelection(std::vector<int> Orderedcarindex, std::vector<Car> &tempCarArray)
+{
+    float chosen = Helper::random(0, totalFitness);
+    float partialSum = 0;
+    
+    for (int i = 0; i < Orderedcarindex.size(); i++)
+    {
+        if(partialSum + (tempCarArray[Orderedcarindex[i]].getFitness() - worstFitness) < chosen)
+        {
+            partialSum+=(tempCarArray[Orderedcarindex[i]].getFitness() - worstFitness);
+        }
+        else
+            return Orderedcarindex[i];
+        
+    }
+    std::cout<<"ERROR in RouletteWheelSelection"<<std::endl;
+    return 0;
+}
+int PopulationManager::getCameraID()
+{
+    return CameraID;
+}
+
+unsigned int PopulationManager::numCars()
+{
+    return (unsigned int)carArray.size();
+}
+

@@ -12,7 +12,7 @@ Chromosome::Chromosome()
 {
 }
 
- void Chromosome::AddGene(int NumberOfGenes, int maxValue, int minValue)
+void Chromosome::AddGene(int NumberOfGenes, int maxValue, int minValue)
 {
     for(int i{0}; i<NumberOfGenes; i++)
     {
@@ -32,7 +32,6 @@ void Chromosome::EndAddingGenes()
     Colour[1] = Helper::random(0,255)/255.f;
     Colour[2] = Helper::random(0,255)/255.f;
 }
-
 void Chromosome::SetInt(int pos, int value)
 {
     if (genes.size() > pos)
@@ -40,7 +39,6 @@ void Chromosome::SetInt(int pos, int value)
     else
         std::cout<<"input position of " << pos << " is greater than size of genes"<<std::endl;
 }
-
 void Chromosome::Crossover(Chromosome &c1, Chromosome &c2)
 {
     int point = Helper::random(0, dnaLength-1);
@@ -60,7 +58,6 @@ void Chromosome::Crossover(Chromosome &c1, Chromosome &c2)
     Colour[1] = ((c1.Colour[1]*255+c2.Colour[1]*255)/2.f)/255.f;
     Colour[2] = ((c1.Colour[2]*255+c2.Colour[2]*255)/2.f)/255.f;
 }
-
 void Chromosome::Mutate(int MutationRate)
 {
     int chancethisgeneswaps = 0;
@@ -90,7 +87,31 @@ void Chromosome::Mutate(int MutationRate)
     Colour[1] = Helper::random(0,255)/255.f;
     Colour[2] = Helper::random(0,255)/255.f;
 }
-
+void Chromosome::FromString(std::string ch)
+{
+    std::string delimiter = ",";
+    int count = 0;
+    size_t pos = 0;
+    std::string token;
+    int colourcount = 0;
+    while ((pos = ch.find(delimiter)) != std::string::npos)
+    {
+        token = ch.substr(0, pos);
+        
+        if(token.find('c') == std::string::npos)
+        {
+            SetInt(count, std::stoi(token));
+        }
+        else
+        {
+            token = token.substr(token.find('c')+1,token.size());
+            Colour[colourcount] = std::stof(token);
+            colourcount++;
+        }
+        ch.erase(0, pos + delimiter.length());
+        count++;
+    }
+}
 
 int Chromosome::GetGene(int pos)
 {
@@ -122,6 +143,7 @@ int Chromosome::GetMinValue(int pos)
         return 0;
     }
 }
+
 std::string Chromosome::ToString()
 {
     std::string chromoString = "";
@@ -136,30 +158,4 @@ std::string Chromosome::ToString()
         chromoString += "c" + std::to_string(Colour[i]) + ", ";
     }
     return chromoString;
-}
-void Chromosome::FromString(std::string ch)
-{
-    std::string delimiter = ",";
-    int count = 0;
-    size_t pos = 0;
-    std::string token;
-    int colourcount = 0;
-    while ((pos = ch.find(delimiter)) != std::string::npos)
-    {
-        token = ch.substr(0, pos);
-        
-        if(token.find('c') == std::string::npos)
-        {
-            SetInt(count, std::stoi(token));
-        }
-        else
-        {
-           token = token.substr(token.find('c')+1,token.size());
-            Colour[colourcount] = std::stof(token);
-            colourcount++;
-        }
-        ch.erase(0, pos + delimiter.length());
-        count++;
-    }
-
 }
