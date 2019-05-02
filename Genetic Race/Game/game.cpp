@@ -1,5 +1,4 @@
 #include "game.h"
-#include <thread>
 #include <iomanip>
 #include <locale>
 #include "imgui.h"
@@ -212,14 +211,14 @@ void Game::GamePlay()
     if(Racing && !PAUSE)
     {
         popManager.UpdateCars();
-        Input();
+        UserInterface();
         UpdateOverlays();
         OverallPlayerLapTime += ConstantData.elapsedTime;
         //////////////////////////
     }
     else if(PAUSE)
     {
-        Input();
+        UserInterface();
     }
     else
     {
@@ -263,7 +262,7 @@ void Game::Render()
     GameWindow.display();
 }
 
-void Game::Input()
+void Game::UserInterface()
 {
     popManager.UpdateGUI(PAUSE);
     ImGui::Begin("InGame Menu");

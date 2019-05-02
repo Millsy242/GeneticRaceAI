@@ -3,7 +3,8 @@
 //
 //  Created by Daniel Harvey on 08/04/2019.
 //
-
+// IO for the sqlite3 Database and structs to handle this data
+//
 #ifndef Database_hpp
 #define Database_hpp
 #include <iostream>

@@ -2,8 +2,11 @@
 //  DataStruct.hpp
 //  t02
 //
-//  Created by HARVEY, DANIEL on 26/11/2018.
+//  Created by HARVEY, DANIEL on 26/2/2019.
 //
+// Struct to hold data required throughout the program
+// This helps to keep track of this data rather than spreading it across multiple classes.
+// It also saves and loads from config.txt
 //
 #ifndef DataStruct_hpp
 #define DataStruct_hpp
@@ -42,7 +45,7 @@ struct Data
     void LoadDataFromFile()
     {
         std::string line;
-        std::ifstream myfile ("Config.txt");
+        std::ifstream myfile ("Genetic Race Data/Config.txt");
         bool exit = false;
         if (myfile.is_open())
         {
@@ -173,6 +176,7 @@ struct Data
             myfile.close();
         }
     }
+    //Values 
     int PopSize = 100;
     int ScreenHeight{900};
     int ScreenWidth{1200};

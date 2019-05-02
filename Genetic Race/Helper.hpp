@@ -1,11 +1,10 @@
 //
 //  Helper.hpp
-//  t02
 //
 //  Created by Daniel Harvey on 17/02/2019.
 //  
+// Helper Fucntions used throughout Development
 //
-
 #ifndef Helper_hpp
 #define Helper_hpp
 
@@ -13,8 +12,9 @@
 #include <sstream>
 #include <fstream>
 #include <iomanip>
+#include <cmath>
 #include <SFML/Graphics.hpp>
-#include "SFMLVectorMaths.hpp"
+
 
 namespace Helper
 {
@@ -109,11 +109,18 @@ namespace Helper
         return (vect.x*vect.x + vect.y*vect.y);
     }
     
+    inline void normalise( sf::Vector2f &vect )
+    {
+        const double length = std::sqrt( (double)magnitudeSQ(vect));
+        vect.x /= length;
+        vect.y /= length;
+    }
+    
     inline void limit(sf::Vector2f &vect, float max)
     {
         if(Helper::magnitudeSQ(vect) > max * max)
         {
-            sf::normalize(vect);
+            normalise(vect);
             vect *= max; 
         }
     }

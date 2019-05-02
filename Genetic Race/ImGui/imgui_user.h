@@ -3,14 +3,17 @@
 //
 //  Created by Daniel Harvey on 13/04/2019.
 //
-
+// File to provide custom functionality to ImGui
+// Code taken from:
+// https://eliasdaler.github.io/using-imgui-with-sfml-pt2/#using-imgui-with-stl
+//
 #ifndef imgui_user_h
 #define imgui_user_h
 
 #include <stdio.h>
 #include <string>
 #include <vector>
-//https://eliasdaler.github.io/using-imgui-with-sfml-pt2/#using-imgui-with-stl
+
 namespace ImGui
 {
     static auto vector_getter = [](void* vec, int idx, const char** out_text)

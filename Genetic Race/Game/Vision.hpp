@@ -4,7 +4,8 @@
 //
 //  Created by Daniel Harvey on 23/02/2019.
 //
-
+// Manages all SightLines (Feelers) for a car
+//
 #ifndef Vision_hpp
 #define Vision_hpp
 

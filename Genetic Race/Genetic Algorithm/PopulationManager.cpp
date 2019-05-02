@@ -1,9 +1,7 @@
 //
 //  PopulationManager.cpp
-//  t02
 //
 //  Created by Daniel Harvey on 16/02/2019.
-//  Copyright © 2019 Cordry, Julien. All rights reserved.
 //
 
 #include "PopulationManager.hpp"

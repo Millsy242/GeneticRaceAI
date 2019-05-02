@@ -5,6 +5,39 @@
 	<key>logFormatVersion</key>
 	<integer>10</integer>
 	<key>logs</key>
-	<dict/>
+	<dict>
+		<key>AAA30FC5-46CC-4728-BDBB-01CF04019137</key>
+		<dict>
+			<key>className</key>
+			<string>DBGConsoleLog</string>
+			<key>documentTypeString</key>
+			<string>com.apple.dt.IDE.DebuggerLogContentType</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
+			<key>fileName</key>
+			<string>AAA30FC5-46CC-4728-BDBB-01CF04019137.xcactivitylog</string>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Genetic Race project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Genetic Race</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Debug Genetic Race</string>
+			<key>timeStartedRecording</key>
+			<real>577734381.51134706</real>
+			<key>timeStoppedRecording</key>
+			<real>577734384.20706606</real>
+			<key>title</key>
+			<string>Debug Genetic Race</string>
+			<key>uniqueIdentifier</key>
+			<string>AAA30FC5-46CC-4728-BDBB-01CF04019137</string>
+		</dict>
+	</dict>
 </dict>
 </plist>

@@ -1,3 +1,7 @@
+//Menu.h
+// Daniel Harvey
+
+//Orgnaises the Menu Window and returns to main.cpp either to load the game or exit. 
 #ifndef MENU_H
 #define MENU_H
 #include <SFML/Graphics.hpp>
@@ -92,8 +96,7 @@ class Menu
     private:
     
     Data &ConstantData;
-    
-    const std::string currentDateTime_();
+
     void Setup();
     void Loop(); 
     void Input();

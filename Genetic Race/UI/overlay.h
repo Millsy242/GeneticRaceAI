@@ -1,3 +1,6 @@
+//Overlay.h
+//Daniel Harvey
+//Used extensively throughout the project to display UI features, before being all but replaced by ImGui
 #ifndef OVERLAY_H
 #define OVERLAY_H
 
@@ -34,9 +37,9 @@ class Overlay
         void SetStyle(std::string TextName, sf::Uint32 style);
         void ClearAll();
     
-     std::vector<std::string> GetPlayerNames();
+        std::vector<std::string> GetPlayerNames();
     
-            sf::Color GetColour(std::string TextName);
+        sf::Color GetColour(std::string TextName);
 
     private:
 

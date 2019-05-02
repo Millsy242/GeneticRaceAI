@@ -1,3 +1,6 @@
+//Game class
+// Created by Dnaiel Harvey
+// Manages the SFML Window, time, rendering, etc. 
 #ifndef GAME_H
 #define GAME_H
 #include <SFML/Network.hpp>
@@ -31,10 +34,7 @@ private:
     void GamePlay();
     void Render();
     void OrganiseStats();
-    void Input();
-    void Movement();
-    void Collisions();
-    void SaveDataToFile();
+    void UserInterface();
     void SetupPostRace();
     void UpdateOverlays();
     

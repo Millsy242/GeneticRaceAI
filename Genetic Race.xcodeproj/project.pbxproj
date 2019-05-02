@@ -89,7 +89,6 @@
 		0B14320E2267EF36000FEEF7 /* Chromosome.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Chromosome.hpp; sourceTree = "<group>"; };
 		0B14320F2267EF36000FEEF7 /* Chromosome.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Chromosome.cpp; sourceTree = "<group>"; };
 		0B1432102267EF36000FEEF7 /* PopulationManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PopulationManager.hpp; sourceTree = "<group>"; };
-		0B1432202267EF7D000FEEF7 /* SFMLVectorMaths.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SFMLVectorMaths.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,7 +131,6 @@
 				0B1431ED2267EF35000FEEF7 /* Game */,
 				0B14320C2267EF36000FEEF7 /* Genetic Algorithm */,
 				0B1431FD2267EF35000FEEF7 /* Helper.hpp */,
-				0B1432202267EF7D000FEEF7 /* SFMLVectorMaths.hpp */,
 				0B1432072267EF36000FEEF7 /* ImGui */,
 				0B1432092267EF36000FEEF7 /* Menu */,
 				0B1432012267EF36000FEEF7 /* OsDialog */,

@@ -3,7 +3,8 @@
 //
 //  Created by Daniel Harvey on 04/03/2019.
 //
-
+// Sightline (feeler) to read data from the Track
+//
 #ifndef SightLine_hpp
 #define SightLine_hpp
 #include <SFML/Graphics.hpp>

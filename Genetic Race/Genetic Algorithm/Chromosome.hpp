@@ -1,11 +1,10 @@
 //
 //  Chromosome.hpp
-//  t02
 //
 //  Created by Daniel Harvey on 21/02/2019.
-//  Copyright © 2019 Cordry, Julien. All rights reserved.
 //
-
+// Chromosome class to hold array of genes and provide functionality to use/edit them
+//
 #ifndef Chromosome_hpp
 #define Chromosome_hpp
 #include <iostream>

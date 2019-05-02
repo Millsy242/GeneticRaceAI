@@ -1,3 +1,8 @@
+//
+//  Car.cpp
+//
+//  Created by Daniel Harvey
+//
 #include "Car.h"
 #include "Helper.hpp"
 
@@ -12,7 +17,7 @@ Car::~Car()
 void Car::Init()
 {
     carSprite.setTexture(*ConstantData.carSprite->getTexture());
-    carSprite.setOrigin(ConstantData.CarOrigin );
+    carSprite.setOrigin(ConstantData.CarOrigin);
     carSprite.setScale(2, 2);
     
     eyes.SetScale(carSprite.getScale().x, carSprite.getScale().y);

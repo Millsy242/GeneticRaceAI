@@ -177,27 +177,46 @@ void Menu::GeneEditor()
             ch.AddGene(1,CarStats.MaxSpeed,0.5);
             ch.EndAddingGenes();
             ConstantData.savedChromosomes.push_back(std::pair<std::string,std::string>("Custom Chromosome",ch.ToString()));
-        }
-        
-        ImGui::ListBox("Selected Genes", &selectedgenesplace,SelectedItems );
-        if(ConstantData.savedChromosomes.size() != ConstantData.Chromosomes.size() )
-        {
-            Chromosome ch;
-            ch.AddGene(2,255,0);
-            ch.AddGene(1,1,0);
-            ch.AddGene(1,200,1);
-            ch.AddGene(1,CarStats.MaxSpeed,0.5);
-            ch.EndAddingGenes();
-            
+            ConstantData.Chromosomes.push_back(ch);
             SelectedItems.clear();
             for(int i{0}; i< ConstantData.savedChromosomes.size(); i++)
             {
                 SelectedItems.push_back(std::to_string(i+1) + ": " + ConstantData.savedChromosomes[i].first + ", " + ConstantData.savedChromosomes[i].second);
-                
-                ch.FromString(ConstantData.savedChromosomes[i].second);
-                ConstantData.Chromosomes.push_back(ch);
             }
-            
+        }
+        
+        ImGui::ListBox("Selected Genes", &selectedgenesplace,SelectedItems );
+        if(ConstantData.savedChromosomes.size() != ConstantData.Chromosomes.size() || CreateOwn)
+        {
+            if(ConstantData.Chromosomes.size() < ConstantData.savedChromosomes.size())
+            {
+                Chromosome ch;
+                ch.AddGene(2,255,0);
+                ch.AddGene(1,1,0);
+                ch.AddGene(1,200,1);
+                ch.AddGene(1,CarStats.MaxSpeed,0.5);
+                ch.EndAddingGenes();
+                
+                SelectedItems.clear();
+                for(int i{0}; i< ConstantData.savedChromosomes.size(); i++)
+                {
+                    SelectedItems.push_back(std::to_string(i+1) + ": " + ConstantData.savedChromosomes[i].first + ", " + ConstantData.savedChromosomes[i].second);
+                    
+                    ch.FromString(ConstantData.savedChromosomes[i].second);
+                    ConstantData.Chromosomes.push_back(ch);
+                }
+            }
+            else if(ConstantData.Chromosomes.size() > ConstantData.savedChromosomes.size())
+            {
+                for(int i{0}; i< ConstantData.Chromosomes.size(); i++)
+                {
+                    if(i > ConstantData.savedChromosomes.size())
+                    {
+                        std::pair<std::string,std::string> temp{"SavedGene" + std::to_string(i),ConstantData.Chromosomes[i].ToString()};
+                        ConstantData.savedChromosomes[i] = temp;
+                    }
+                }
+            }
             
         }
         CreateOwn = false;
@@ -534,10 +553,10 @@ void Menu::MainMenu()
     
     if(ImGui::Button("NextTrack"))
     {
-        if(Helper::is_file_exist("Circuits/TrackVis_" + std::to_string(ConstantData.TrackNumber+1) + ".png") && Helper::is_file_exist("Circuits/TrackBac_" + std::to_string(ConstantData.TrackNumber+1) + ".png"))
+        if(Helper::is_file_exist("Genetic Race Data/Circuits/TrackVis_" + std::to_string(ConstantData.TrackNumber+1) + ".png") && Helper::is_file_exist("Genetic Race Data/Circuits/TrackBac_" + std::to_string(ConstantData.TrackNumber+1) + ".png"))
         {
             ConstantData.TrackNumber++;
-            track.loadFromFile("Circuits/TrackVis_" + std::to_string(ConstantData.TrackNumber) + ".png");
+            track.loadFromFile("Genetic Race Data/Circuits/TrackVis_" + std::to_string(ConstantData.TrackNumber) + ".png");
             tracksprite.setTexture(track);
             
             if(ConstantData.TrackNumber > ConstantData.NumberOfTracks)
@@ -548,7 +567,7 @@ void Menu::MainMenu()
         else
         {
             ConstantData.TrackNumber = 1;
-            track.loadFromFile("Circuits/TrackVis_" + std::to_string(ConstantData.TrackNumber) + ".png");
+            track.loadFromFile("Genetic Race Data/Circuits/TrackVis_" + std::to_string(ConstantData.TrackNumber) + ".png");
             tracksprite.setTexture(track);
         }
     }
@@ -556,10 +575,10 @@ void Menu::MainMenu()
     {
         if(ConstantData.TrackNumber != 0)
         {
-            if(Helper::is_file_exist("Circuits/TrackVis_" + std::to_string(ConstantData.TrackNumber-1) + ".png") && Helper::is_file_exist("Circuits/TrackBac_" + std::to_string(ConstantData.TrackNumber-1) + ".png"))
+            if(Helper::is_file_exist("Genetic Race Data/Circuits/TrackVis_" + std::to_string(ConstantData.TrackNumber-1) + ".png") && Helper::is_file_exist("Genetic Race Data/Circuits/TrackBac_" + std::to_string(ConstantData.TrackNumber-1) + ".png"))
             {
                 ConstantData.TrackNumber--;
-                track.loadFromFile("Circuits/TrackVis_" + std::to_string(ConstantData.TrackNumber) + ".png");
+                track.loadFromFile("Genetic Race Data/Circuits/TrackVis_" + std::to_string(ConstantData.TrackNumber) + ".png");
                 tracksprite.setTexture(track);
             }
         }
@@ -570,7 +589,7 @@ void Menu::CarEditor()
 {
     if(ImGui::Button("Save"))
     {
-        char* FilePath = osdialog_file(OSDIALOG_SAVE,"./Players","Player.txt",NULL);
+        char* FilePath = osdialog_file(OSDIALOG_SAVE,"Genetic Race Data/Players","Player.txt",NULL);
         if(FilePath)
         {
             CarStats.SaveToFile(FilePath);
@@ -584,7 +603,6 @@ void Menu::CarEditor()
     }
     if(ImGui::Button("Load"))
     {
-        //osdialog_filters *filters = osdialog_filters_parse(":txt;");
         char *FilePath = osdialog_file(OSDIALOG_OPEN, "Genetic Race Data/Players", "test", NULL);
         if (FilePath)
         {

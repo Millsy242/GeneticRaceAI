@@ -3,7 +3,8 @@
 //
 //  Created by Daniel Harvey on 16/02/2019.
 //
-
+// Manager for all Agents and the camera,  handles specific GUI functionality and writing data to file. 
+//
 #ifndef PopulationManager_hpp
 #define PopulationManager_hpp
 
