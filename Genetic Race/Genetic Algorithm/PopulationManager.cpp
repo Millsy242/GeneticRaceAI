@@ -56,11 +56,11 @@ void PopulationManager::SetupChromosome(Chromosome &ch, float maxspeed)
 }
 void PopulationManager::WriteToCSV()
 {
-    std::ofstream output("GenesOutput/"+nameofoutput+".csv", std::ios::app);
+    std::ofstream output("Genetic Race Data/GenesOutput/"+nameofoutput+".csv", std::ios::app);
     
-    output << "Generation : ," << Generation << "\nPopulation Size: ," << ConstantData.PopSize << "\nMutation Rate:," << ConstantData.MutationRate << "\nFastest Lap:,"<<FastestLap<<"\nAverage Fastest Lap:," << AverageLapTimes[AverageLapTimes.size()]<<"\nTotal Fitness:,"<< totalFitness<<"\n";
+    output << "Track Number:," << ConstantData.TrackNumber << "\nGeneration:," << Generation << "\nPopulation Size: ," << ConstantData.PopSize << "\nMutation Rate:," << ConstantData.MutationRate << "\nFastest Lap:,"<<FastestLap<<"\nAverage Fastest Lap:," << AverageLapTimes[AverageLapTimes.size()-1]<<"\nTotal Fitness:,"<< totalFitness<<"\nElitism:," << ConstantData.Elitism << "\nNumElites:,"<<ConstantData.ElitismNum;
     
-    output << "Braking Point, Turning Point, Longer Middle, Feeler Length, Minimum Speed, Red, Green, Blue, Fastest Lap\n";
+    output << "\nBraking Point, Turning Point, Longer Middle, Feeler Length, Minimum Speed, Red, Green, Blue, Fastest Lap\n";
     
     for(int i{0}; i<carArray.size();i++)
     {
