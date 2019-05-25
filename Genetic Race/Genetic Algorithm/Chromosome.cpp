@@ -62,7 +62,7 @@ void Chromosome::Mutate(int MutationRate)
     for(int i{0}; i<genes.size();i++)
     {
         chancethisgeneswaps = Helper::random(0, 100);
-        if(chancethisgeneswaps < MutationRate)
+        if(chancethisgeneswaps > MutationRate)
         {
             if(maxvalues[i] - minvalues[i] > 1)
             {
