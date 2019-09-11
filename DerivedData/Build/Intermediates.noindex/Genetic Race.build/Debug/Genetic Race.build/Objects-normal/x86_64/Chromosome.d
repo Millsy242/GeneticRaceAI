@@ -1,8 +1,7 @@
 dependencies: \
-  /Volumes/Data/GoogleDrive/Programming/Year_3/Second\ Semester/FYP/Genetic\ Race/Genetic\ Race/Genetic\ Algorithm/Chromosome.cpp \
-  /Volumes/Data/GoogleDrive/Programming/Year_3/Second\ Semester/FYP/Genetic\ Race/Genetic\ Race/Genetic\ Algorithm/Chromosome.hpp \
-  /Volumes/Data/GoogleDrive/Programming/Year_3/Second\ Semester/FYP/Genetic\ Race/Genetic\ Race/Helper.hpp \
-  /Volumes/Data/GoogleDrive/Programming/Year_3/Second\ Semester/FYP/Genetic\ Race/Genetic\ Race/Game/Car.h \
+  /Users/danielharvey/Desktop/Daniel\ Harvey\ FYP\ 2:5:19/Genetic\ Race/Genetic\ Race/Genetic\ Algorithm/Chromosome.cpp \
+  /Users/danielharvey/Desktop/Daniel\ Harvey\ FYP\ 2:5:19/Genetic\ Race/Genetic\ Race/Genetic\ Algorithm/Chromosome.hpp \
+  /Users/danielharvey/Desktop/Daniel\ Harvey\ FYP\ 2:5:19/Genetic\ Race/Genetic\ Race/Helper.hpp \
   /usr/local/Cellar/sfml/2.5.1/include/SFML/Graphics.hpp \
   /usr/local/Cellar/sfml/2.5.1/include/SFML/Window.hpp \
   /usr/local/Cellar/sfml/2.5.1/include/SFML/System.hpp \
@@ -76,9 +75,4 @@ dependencies: \
   /usr/local/Cellar/sfml/2.5.1/include/SFML/Graphics/Glsl.inl \
   /usr/local/Cellar/sfml/2.5.1/include/SFML/Graphics/Sprite.hpp \
   /usr/local/Cellar/sfml/2.5.1/include/SFML/Graphics/Text.hpp \
-  /usr/local/Cellar/sfml/2.5.1/include/SFML/Graphics/VertexBuffer.hpp \
-  /Volumes/Data/GoogleDrive/Programming/Year_3/Second\ Semester/FYP/Genetic\ Race/Genetic\ Race/UI/overlay.h \
-  /Volumes/Data/GoogleDrive/Programming/Year_3/Second\ Semester/FYP/Genetic\ Race/Genetic\ Race/Game/DataStruct.hpp \
-  /Volumes/Data/GoogleDrive/Programming/Year_3/Second\ Semester/FYP/Genetic\ Race/Genetic\ Race/Game/Vision.hpp \
-  /Volumes/Data/GoogleDrive/Programming/Year_3/Second\ Semester/FYP/Genetic\ Race/Genetic\ Race/Game/SightLine.hpp \
-  /Volumes/Data/GoogleDrive/Programming/Year_3/Second\ Semester/FYP/Genetic\ Race/Genetic\ Race/SFMLVectorMaths.hpp
+  /usr/local/Cellar/sfml/2.5.1/include/SFML/Graphics/VertexBuffer.hpp

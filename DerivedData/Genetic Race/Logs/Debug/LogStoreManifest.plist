@@ -6,7 +6,7 @@
 	<integer>10</integer>
 	<key>logs</key>
 	<dict>
-		<key>AAA30FC5-46CC-4728-BDBB-01CF04019137</key>
+		<key>3D3B600B-298B-49AE-A27E-E8BEA5749F5B</key>
 		<dict>
 			<key>className</key>
 			<string>DBGConsoleLog</string>
@@ -15,7 +15,7 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
 			<key>fileName</key>
-			<string>AAA30FC5-46CC-4728-BDBB-01CF04019137.xcactivitylog</string>
+			<string>3D3B600B-298B-49AE-A27E-E8BEA5749F5B.xcactivitylog</string>
 			<key>primaryObservable</key>
 			<dict>
 				<key>highLevelStatus</key>
@@ -30,13 +30,13 @@
 			<key>signature</key>
 			<string>Debug Genetic Race</string>
 			<key>timeStartedRecording</key>
-			<real>577734381.51134706</real>
+			<real>579191256.70934296</real>
 			<key>timeStoppedRecording</key>
-			<real>577734384.20706606</real>
+			<real>579191819.50906301</real>
 			<key>title</key>
 			<string>Debug Genetic Race</string>
 			<key>uniqueIdentifier</key>
-			<string>AAA30FC5-46CC-4728-BDBB-01CF04019137</string>
+			<string>3D3B600B-298B-49AE-A27E-E8BEA5749F5B</string>
 		</dict>
 	</dict>
 </dict>

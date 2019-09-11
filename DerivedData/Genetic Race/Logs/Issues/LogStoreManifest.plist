@@ -32,6 +32,32 @@
 			<key>uniqueIdentifier</key>
 			<string>6BE88A53-EE53-48CC-A861-0A5B92FD2EDE</string>
 		</dict>
+		<key>EBD568C8-7C52-4F41-BAE9-3A9A99305EA3</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.target.product-type.tool</string>
+			<key>fileName</key>
+			<string>EBD568C8-7C52-4F41-BAE9-3A9A99305EA3.xcactivitylog</string>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>W</string>
+			</dict>
+			<key>signature</key>
+			<string>Genetic_Race-evllutmprxwlamhbakndjhfvmiry</string>
+			<key>timeStartedRecording</key>
+			<real>579608593.858145</real>
+			<key>timeStoppedRecording</key>
+			<real>579608599.35853195</real>
+			<key>title</key>
+			<string>Build target Genetic Race</string>
+			<key>uniqueIdentifier</key>
+			<string>EBD568C8-7C52-4F41-BAE9-3A9A99305EA3</string>
+		</dict>
 	</dict>
 	<key>preserveOldLogs</key>
 	<true/>

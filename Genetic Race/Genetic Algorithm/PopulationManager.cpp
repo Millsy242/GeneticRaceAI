@@ -386,7 +386,7 @@ Car PopulationManager::Breed(Car M, Car D)
             newCar.chromosome = D.chromosome;
         }
     }
-    if(Helper::random(0, 100) == ConstantData.MutationRate)
+    if(Helper::random(0, ConstantData.MutationRate) == 1)
     {
         newCar.chromosome.Mutate(ConstantData.MutationRate);
     }

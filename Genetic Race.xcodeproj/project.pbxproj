@@ -264,7 +264,7 @@
 		0B1431B42267E85E000FEEF7 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1100;
 				ORGANIZATIONNAME = "Daniel Harvey";
 				TargetAttributes = {
 					0B1431BB2267E85E000FEEF7 = {
@@ -431,6 +431,7 @@
 		0B1431C42267E85E000FEEF7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 0.8;
 				HEADER_SEARCH_PATHS = (
@@ -449,6 +450,7 @@
 		0B1431C52267E85E000FEEF7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 0.8;
 				HEADER_SEARCH_PATHS = (
